@@ -8,6 +8,19 @@ export const translations = {
             dashboard: "Dashboard",
             login: "Login",
             logout: "Logout",
+            activityTypes: {
+                training: "Training",
+                bmp: "Best Management Practice",
+                hse: "HSE / K3",
+                hcv: "HCV",
+                businessDev: "Business Development",
+                gedsi: "GEDSI",
+            },
+            mediaTypes: {
+                articles: "Articles",
+                photos: "Photos",
+                videos: "Videos",
+            },
         },
         // Hero Section
         hero: {
@@ -82,6 +95,19 @@ export const translations = {
             dashboard: "Dashboard",
             login: "Masuk",
             logout: "Keluar",
+            activityTypes: {
+                training: "Pelatihan",
+                bmp: "Praktik Pengelolaan Terbaik",
+                hse: "HSE / K3",
+                hcv: "HCV",
+                businessDev: "Pengembangan Bisnis",
+                gedsi: "GEDSI",
+            },
+            mediaTypes: {
+                articles: "Artikel",
+                photos: "Foto",
+                videos: "Video",
+            },
         },
         // Hero Section
         hero: {

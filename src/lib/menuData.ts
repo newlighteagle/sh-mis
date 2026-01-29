@@ -1,0 +1,55 @@
+// Menu data structure for navbar dropdowns
+export const menuData = {
+    community: {
+        kampar: [
+            { id: 'apss-sei-galuh', name: 'APSS Sei Galuh', href: '/groups/apss-sei-galuh' },
+            { id: 'kud-karya-sembada', name: 'KUD Karya Sembada', href: '/groups/kud-karya-sembada' },
+            { id: 'kud-hasrat-jaya', name: 'KUD Hasrat Jaya Pagaruyung', href: '/groups/kud-hasrat-jaya' },
+            { id: 'fortaski', name: 'FORTASKI', href: '/groups/fortaski' },
+            { id: 'fps-sei-garo', name: 'FPS Sei Garo', href: '/groups/fps-sei-garo' },
+            { id: 'kp-kusuma-bakti', name: 'KP Kusuma Bakti Mandiri', href: '/groups/kp-kusuma-bakti' },
+            { id: 'kopsa-tri-manunggal', name: 'Kopsa Tri Manunggal', href: '/groups/kopsa-tri-manunggal' },
+            { id: 'teratai-sawit', name: 'Teratai Sawit Lestari', href: '/groups/teratai-sawit' },
+        ],
+        rohul: [
+            { id: 'kud-tujuh-permata', name: 'KUD Tujuh Permata', href: '/groups/kud-tujuh-permata' },
+            { id: 'kud-intan-makmur', name: 'KUD Intan Makmur', href: '/groups/kud-intan-makmur' },
+            { id: 'kud-sawit-sejahtera', name: 'KUD Sawit Sejahtera', href: '/groups/kud-sawit-sejahtera' },
+            { id: 'fpss-semarak-mudo', name: 'FPSS Semarak Mudo', href: '/groups/fpss-semarak-mudo' },
+            { id: 'ppks-tayo-barokah', name: 'PPKS Tayo Barokah', href: '/groups/ppks-tayo-barokah' },
+            { id: 'apkasa-rayon-skpe', name: 'APKASA Rayon SKPE', href: '/groups/apkasa-rayon-skpe' },
+            { id: 'aspek-ras', name: 'ASPEK RAS', href: '/groups/aspek-ras' },
+            { id: 'aspek-rsb', name: 'ASPEK RSB', href: '/groups/aspek-rsb' },
+            { id: 'aspek-kre', name: 'ASPEK KRE', href: '/groups/aspek-kre' },
+            { id: 'citra-gemilang', name: 'Citra Gemilang', href: '/groups/citra-gemilang' },
+        ],
+        siak: [
+            { id: 'kpm-karya-maju', name: 'KPM Karya Maju', href: '/groups/kpm-karya-maju' },
+            { id: 'apkasdu', name: 'APKASDU', href: '/groups/apkasdu' },
+            { id: 'apksmb', name: 'APKSMB', href: '/groups/apksmb' },
+            { id: 'asermisas', name: 'ASERMISAS', href: '/groups/asermisas' },
+            { id: 'apkssb', name: 'APKSSB', href: '/groups/apkssb' },
+            { id: 'apkasaiber', name: 'APKASAIBER', href: '/groups/apkasaiber' },
+            { id: 'aspeksab', name: 'ASPEKSAB', href: '/groups/aspeksab' },
+            { id: 'kp-pksj', name: 'KP PKSJ', href: '/groups/kp-pksj' },
+            { id: 'kbj', name: 'KBJ', href: '/groups/kbj' },
+            { id: 'ksj', name: 'KSJ', href: '/groups/ksj' },
+        ],
+        pelalawan: [
+            { id: 'kud-mulia', name: 'KUD Mulia', href: '/groups/kud-mulia' },
+        ],
+    },
+    activity: [
+        { id: 'training', nameEn: 'Training', nameId: 'Pelatihan' },
+        { id: 'bmp', nameEn: 'Best Management Practice', nameId: 'Praktik Pengelolaan Terbaik' },
+        { id: 'hse', nameEn: 'HSE / K3', nameId: 'HSE / K3' },
+        { id: 'hcv', nameEn: 'HCV', nameId: 'HCV' },
+        { id: 'business-dev', nameEn: 'Business Development', nameId: 'Pengembangan Bisnis' },
+        { id: 'gedsi', nameEn: 'GEDSI', nameId: 'GEDSI' },
+    ],
+    media: [
+        { id: 'articles', nameEn: 'Articles', nameId: 'Artikel' },
+        { id: 'photos', nameEn: 'Photos', nameId: 'Foto' },
+        { id: 'videos', nameEn: 'Videos', nameId: 'Video' },
+    ],
+};
