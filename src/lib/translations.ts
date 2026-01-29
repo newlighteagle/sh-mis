@@ -1,0 +1,152 @@
+export const translations = {
+    en: {
+        // Navbar
+        nav: {
+            community: "Community",
+            activity: "Activity",
+            media: "Media",
+            dashboard: "Dashboard",
+            login: "Login",
+            logout: "Logout",
+        },
+        // Hero Section
+        hero: {
+            title: "Empowering Smallholder Palm Oil Farmers",
+            subtitle: "WRI Indonesia's Sawit Swadaya program supports sustainable palm oil production across Riau Province",
+            tagline: "Building a sustainable future together",
+            cta: "Explore Communities",
+            learnMore: "Learn More",
+        },
+        // Community Profile
+        community: {
+            title: "Our Communities",
+            subtitle: "Meet the farmer groups driving sustainable change across 4 districts in Riau",
+            districts: {
+                kampar: {
+                    name: "Kampar",
+                    description: "Leading the way in sustainable practices with innovative farming techniques",
+                    groups: "Farmer Groups",
+                    members: "Members",
+                    hectares: "Hectares",
+                },
+                rohul: {
+                    name: "Rokan Hulu",
+                    description: "Community-driven conservation and responsible land management",
+                    groups: "Farmer Groups",
+                    members: "Members",
+                    hectares: "Hectares",
+                },
+                siak: {
+                    name: "Siak",
+                    description: "Pioneer Best Management Practices for Palm Oil Smallholders on Peatlands",
+                    groups: "Farmer Groups",
+                    members: "Members",
+                    hectares: "Hectares",
+                },
+                pelalawan: {
+                    name: "Pelalawan",
+                    description: "Protecting biodiversity while improving farmer livelihoods",
+                    groups: "Farmer Groups",
+                    members: "Members",
+                    hectares: "Hectares",
+                },
+            },
+        },
+        // Media & Activities
+        media: {
+            title: "Activities & Success Stories",
+            subtitle: "Documenting our journey towards sustainable palm oil production",
+            viewGallery: "View Gallery",
+            readMore: "Read More",
+        },
+        // Stakeholders
+        stakeholders: {
+            title: "Our Partners & Supporters",
+            subtitle: "Together with leading organizations committed to sustainable development",
+            partnership: "In partnership with",
+        },
+        // Common
+        common: {
+            loading: "Loading...",
+            error: "An error occurred",
+            close: "Close",
+            menu: "Menu",
+        },
+    },
+    id: {
+        // Navbar
+        nav: {
+            community: "Komunitas",
+            activity: "Kegiatan",
+            media: "Media",
+            dashboard: "Dashboard",
+            login: "Masuk",
+            logout: "Keluar",
+        },
+        // Hero Section
+        hero: {
+            title: "Memberdayakan Petani Sawit Swadaya",
+            subtitle: "Program Sawit Swadaya WRI Indonesia mendukung produksi kelapa sawit berkelanjutan di Provinsi Riau",
+            tagline: "Membangun masa depan berkelanjutan bersama",
+            cta: "Jelajahi Komunitas",
+            learnMore: "Pelajari Lebih Lanjut",
+        },
+        // Community Profile
+        community: {
+            title: "Komunitas Kami",
+            subtitle: "Kenali kelompok tani yang mendorong perubahan berkelanjutan di 4 kabupaten di Riau",
+            districts: {
+                kampar: {
+                    name: "Kampar",
+                    description: "Memimpin praktik berkelanjutan dengan teknik pertanian inovatif",
+                    groups: "Kelompok Tani",
+                    members: "Anggota",
+                    hectares: "Hektar",
+                },
+                rohul: {
+                    name: "Rokan Hulu",
+                    description: "Konservasi berbasis masyarakat dan pengelolaan lahan yang bertanggung jawab",
+                    groups: "Kelompok Tani",
+                    members: "Anggota",
+                    hectares: "Hektar",
+                },
+                siak: {
+                    name: "Siak",
+                    description: "Mempelopori Praktik Pengelolaan Terbaik bagi Petani Sawit Rakyat di Lahan Gambut",
+                    groups: "Kelompok Tani",
+                    members: "Anggota",
+                    hectares: "Hektar",
+                },
+                pelalawan: {
+                    name: "Pelalawan",
+                    description: "Melindungi keanekaragaman hayati sambil meningkatkan penghidupan petani",
+                    groups: "Kelompok Tani",
+                    members: "Anggota",
+                    hectares: "Hektar",
+                },
+            },
+        },
+        // Media & Activities
+        media: {
+            title: "Kegiatan & Kisah Sukses",
+            subtitle: "Mendokumentasikan perjalanan kami menuju produksi kelapa sawit berkelanjutan",
+            viewGallery: "Lihat Galeri",
+            readMore: "Baca Selengkapnya",
+        },
+        // Stakeholders
+        stakeholders: {
+            title: "Mitra & Pendukung Kami",
+            subtitle: "Bersama organisasi terkemuka yang berkomitmen pada pembangunan berkelanjutan",
+            partnership: "Bermitra dengan",
+        },
+        // Common
+        common: {
+            loading: "Memuat...",
+            error: "Terjadi kesalahan",
+            close: "Tutup",
+            menu: "Menu",
+        },
+    },
+};
+
+export type Translations = typeof translations.en;

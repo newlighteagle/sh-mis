@@ -1,14 +1,21 @@
 # 🚀 Implementation Plan - WRI Sawit Swadaya MIS
 
-## Phase 0: Setup
-- [ ] Initialize Next.js 14 (App Router) + ShadcnUI + Lucide Icons.
+## Phase 0: Setup ✅
+- [x] Initialize Next.js 14 (App Router) + ShadcnUI + Lucide Icons.
 
-## Phase 1: Prototype Landing Page
-- [ ] Navbar & Footer (Mobile Responsive).
-- [ ] Home Page: Hero Carousel + 3 Narrative Sections.
-- [ ] Community Page: Filter berdasarkan 4 Distrik (Kampar, Rohul, Siak, Pelalawan).
+## Phase 1: Prototype Landing Page ✅
+- [x] Navbar & Footer (Mobile Responsive):
+    - [x] Navigation Items: Community, Media, Dashboard (conditional - shown when logged in), Login
+    - [x] Dual Language Toggle (EN-English / ID-Indonesia)
+    - [x] Light/Dark Mode Toggle
+- [x] Home Page: Hero Carousel + Narrative Sections emphasizing:
+    - [x] Hero Section with Photo Carousel Background (overlay design with gradient and blur)
+    - [x] Community Profile (4 districts: Kampar, Rohul, Siak, Pelalawan)
+    - [x] Media & Activities (photo galleries with 3 generated images, success stories)
+    - [x] Stakeholder Support (partners, sponsors, collaborators)
+- [ ] Community Page: Filter based on 4 Districts.
+- [ ] Media Page: Activities, events, and community stories.
 - [ ] Blog/Article System (CMS integration in Phase 6).
-- [ ] Login + Link to Admin backend on Navbar.
 
 ## Phase 2: Core Infra & Database
 - [ ] Setup PostgreSQL & Enable PostGIS extension: `CREATE EXTENSION postgis;`.
