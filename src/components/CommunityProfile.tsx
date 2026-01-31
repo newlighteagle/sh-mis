@@ -74,7 +74,7 @@ export default function CommunityProfile() {
                 <div className="mb-16 grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
                     <div className="text-center">
                         <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                            6+
+                            6
                         </div>
                         <p className="text-neutral-600 dark:text-neutral-400">
                             {language === 'en' ? 'Key Partners' : 'Mitra Kunci'}
@@ -98,7 +98,7 @@ export default function CommunityProfile() {
                     </div>
                     <div className="text-center">
                         <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                            {totalFarmers.toLocaleString(language === 'en' ? 'en-US' : 'id-ID')}+
+                            {totalFarmers.toLocaleString(language === 'en' ? 'en-US' : 'id-ID')}
                         </div>
                         <p className="text-neutral-600 dark:text-neutral-400">
                             {language === 'en' ? 'Farmers Supported' : 'Petani Didampingi'}

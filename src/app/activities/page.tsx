@@ -3,13 +3,15 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getAllActivities, activityCategories } from "@/lib/activitiesData";
 import ContentSidebar, { SidebarCategory } from "@/components/ContentSidebar";
-import { Calendar, MapPin, Users, Clock, Tag, GraduationCap, Sprout, Leaf, Shield, TrendingUp, Heart } from "lucide-react";
+import { Calendar, MapPin, Users, Clock, Tag, GraduationCap, Sprout, Leaf, Shield, TrendingUp, Heart, LayoutGrid, List } from "lucide-react";
 import Link from "next/link";
+import { useViewMode } from "@/hooks/useViewMode";
 import Image from "next/image";
 import { getActivitiesByCategory } from "@/lib/activitiesData";
 
 export default function ActivitiesPage() {
     const { language } = useLanguage();
+    const { viewMode, setViewMode } = useViewMode('activities_view_mode');
     const activities = getAllActivities();
 
     // Prepare sidebar categories
@@ -67,8 +69,8 @@ export default function ActivitiesPage() {
                         {language === 'en' ? 'Activities & Programs' : 'Kegiatan & Program'}
                     </h1>
                     {/* Invisible breadcrumb spacer for consistent height */}
-                    <div className="h-5 mb-4" aria-hidden="true"></div>
-                    <p className="text-base text-neutral-600 dark:text-neutral-400 max-w-3xl min-h-[3rem]">
+                    <div className="h-5 mb-4 w-full" aria-hidden="true"></div>
+                    <p className="text-base text-neutral-600 dark:text-neutral-400 w-full min-h-[3rem]">
                         {language === 'en'
                             ? 'Explore our comprehensive training programs and field activities supporting sustainable palm oil smallholders'
                             : 'Jelajahi program pelatihan dan kegiatan lapangan komprehensif kami yang mendukung petani sawit kecil berkelanjutan'
@@ -89,15 +91,41 @@ export default function ActivitiesPage() {
 
                     {/* Main Content Area (3/4) */}
                     <div className="lg:w-3/4 w-full">
+                        {/* View Toggle */}
+                        <div className="flex justify-end mb-6">
+                            <div className="bg-white dark:bg-neutral-800 rounded-lg p-1 border border-neutral-200 dark:border-neutral-700 inline-flex">
+                                <button
+                                    onClick={() => setViewMode('card')}
+                                    className={`p-2 rounded-md transition-all ${viewMode === 'card'
+                                        ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400'
+                                        : 'text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
+                                        }`}
+                                    aria-label="Card View"
+                                >
+                                    <LayoutGrid className="w-5 h-5" />
+                                </button>
+                                <button
+                                    onClick={() => setViewMode('list')}
+                                    className={`p-2 rounded-md transition-all ${viewMode === 'list'
+                                        ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400'
+                                        : 'text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
+                                        }`}
+                                    aria-label="List View"
+                                >
+                                    <List className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+
                         {/* Activities Grid */}
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <div className={`grid gap-6 ${viewMode === 'card' ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
                             {activities.map((activity) => (
                                 <article
                                     key={activity.id}
-                                    className="group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300"
+                                    className={`group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300 ${viewMode === 'list' ? 'flex flex-col md:flex-row' : ''}`}
                                 >
                                     {/* Cover Image */}
-                                    <div className="relative w-full h-48 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/20 dark:to-teal-900/20">
+                                    <div className={`relative bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/20 dark:to-teal-900/20 ${viewMode === 'list' ? 'w-full md:w-72 h-48 md:h-auto shrink-0' : 'w-full h-48'}`}>
                                         {activity.coverImage ? (
                                             <Image
                                                 src={activity.coverImage}
@@ -121,14 +149,16 @@ export default function ActivitiesPage() {
                                     </div>
 
                                     {/* Content */}
-                                    <div className="p-6">
-                                        <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                                            {language === 'en' ? activity.title.en : activity.title.id}
-                                        </h2>
+                                    <div className="p-6 flex flex-col flex-1">
+                                        <div className="mb-auto">
+                                            <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                                {language === 'en' ? activity.title.en : activity.title.id}
+                                            </h2>
 
-                                        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
-                                            {language === 'en' ? activity.excerpt.en : activity.excerpt.id}
-                                        </p>
+                                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
+                                                {language === 'en' ? activity.excerpt.en : activity.excerpt.id}
+                                            </p>
+                                        </div>
 
                                         {/* Meta Information */}
                                         <div className="space-y-2 mb-4">
@@ -179,13 +209,15 @@ export default function ActivitiesPage() {
                                         )}
 
                                         {/* Read More Link */}
-                                        <Link
-                                            href={`/activities/${activity.slug}`}
-                                            className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:gap-3 transition-all"
-                                        >
-                                            {language === 'en' ? 'Read More' : 'Baca Selengkapnya'}
-                                            <span>→</span>
-                                        </Link>
+                                        <div className="mt-2">
+                                            <Link
+                                                href={`/activities/${activity.slug}`}
+                                                className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:gap-3 transition-all"
+                                            >
+                                                {language === 'en' ? 'Read More' : 'Baca Selengkapnya'}
+                                                <span>→</span>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </article>
                             ))}

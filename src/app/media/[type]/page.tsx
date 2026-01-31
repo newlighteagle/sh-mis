@@ -3,15 +3,17 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getMediaByType, mediaTypes, MediaItem } from "@/lib/mediaData";
 import ContentSidebar, { SidebarCategory } from "@/components/ContentSidebar";
-import { Newspaper, Camera, Video, Calendar, User, Clock, MapPin, Eye } from "lucide-react";
+import { Newspaper, Camera, Video, Calendar, User, Clock, MapPin, Eye, LayoutGrid, List } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllMedia } from "@/lib/mediaData";
 import { useParams } from "next/navigation";
+import { useViewMode } from "@/hooks/useViewMode";
 
 export default function MediaTypePage() {
     const params = useParams();
     const { language } = useLanguage();
+    const { viewMode, setViewMode } = useViewMode('media_view_mode');
     const typeParam = params.type as string;
 
     // Map URL slug to type
@@ -103,8 +105,34 @@ export default function MediaTypePage() {
 
                     {/* Main Content Area (3/4) */}
                     <div className="lg:w-3/4 w-full">
+                        {/* View Toggle */}
+                        <div className="flex justify-end mb-6">
+                            <div className="bg-white dark:bg-neutral-800 rounded-lg p-1 border border-neutral-200 dark:border-neutral-700 inline-flex">
+                                <button
+                                    onClick={() => setViewMode('card')}
+                                    className={`p-2 rounded-md transition-all ${viewMode === 'card'
+                                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                                        : 'text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
+                                        }`}
+                                    aria-label="Card View"
+                                >
+                                    <LayoutGrid className="w-5 h-5" />
+                                </button>
+                                <button
+                                    onClick={() => setViewMode('list')}
+                                    className={`p-2 rounded-md transition-all ${viewMode === 'list'
+                                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                                        : 'text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
+                                        }`}
+                                    aria-label="List View"
+                                >
+                                    <List className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+
                         {/* Media Grid */}
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <div className={`grid gap-6 ${viewMode === 'card' ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
                             {mediaItems.map((item) => {
                                 const isArticle = item.type === 'article';
                                 const isPhoto = item.type === 'photo';
@@ -113,10 +141,10 @@ export default function MediaTypePage() {
                                 return (
                                     <article
                                         key={item.id}
-                                        className="group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300"
+                                        className={`group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300 ${viewMode === 'list' ? 'flex flex-col md:flex-row' : ''}`}
                                     >
                                         {/* Cover Image/Thumbnail */}
-                                        <div className="relative w-full h-56 bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/20 dark:to-cyan-900/20">
+                                        <div className={`relative bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/20 dark:to-cyan-900/20 ${viewMode === 'list' ? 'w-full md:w-72 h-56 md:h-auto shrink-0' : 'w-full h-56'}`}>
                                             {(isArticle && item.coverImage) || (isPhoto && item.images[0]?.url) || (isVideo && item.thumbnail) ? (
                                                 <>
                                                     <Image
@@ -142,6 +170,14 @@ export default function MediaTypePage() {
                                                 </div>
                                             )}
 
+                                            {/* Type Badge */}
+                                            <div className="absolute top-4 left-4">
+                                                <span className={`px-3 py-1 text-white text-xs font-semibold rounded-full ${isArticle ? 'bg-blue-600' : isPhoto ? 'bg-cyan-600' : 'bg-purple-600'
+                                                    }`}>
+                                                    {language === 'en' ? mediaTypes[item.type].en : mediaTypes[item.type].id}
+                                                </span>
+                                            </div>
+
                                             {/* Photo Count Badge */}
                                             {isPhoto && (
                                                 <div className="absolute top-4 right-4">
@@ -163,17 +199,19 @@ export default function MediaTypePage() {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-6">
-                                            <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                                {language === 'en' ? item.title.en : item.title.id}
-                                            </h2>
+                                        <div className="p-6 flex flex-col flex-1">
+                                            <div className="mb-auto">
+                                                <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                    {language === 'en' ? item.title.en : item.title.id}
+                                                </h2>
 
-                                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
-                                                {language === 'en'
-                                                    ? (isArticle ? item.excerpt.en : item.description.en)
-                                                    : (isArticle ? item.excerpt.id : item.description.id)
-                                                }
-                                            </p>
+                                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
+                                                    {language === 'en'
+                                                        ? (isArticle ? item.excerpt.en : item.description.en)
+                                                        : (isArticle ? item.excerpt.id : item.description.id)
+                                                    }
+                                                </p>
+                                            </div>
 
                                             {/* Meta Information */}
                                             <div className="space-y-2 mb-4">
@@ -225,16 +263,18 @@ export default function MediaTypePage() {
                                             )}
 
                                             {/* Read/View More Link */}
-                                            <Link
-                                                href={`/media/${item.slug}`}
-                                                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold text-sm hover:gap-3 transition-all"
-                                            >
-                                                {language === 'en'
-                                                    ? (isVideo ? 'Watch Video' : isPhoto ? 'View Gallery' : 'Read Article')
-                                                    : (isVideo ? 'Tonton Video' : isPhoto ? 'Lihat Galeri' : 'Baca Artikel')
-                                                }
-                                                <span>→</span>
-                                            </Link>
+                                            <div className="mt-2">
+                                                <Link
+                                                    href={`/media/${item.slug}`}
+                                                    className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold text-sm hover:gap-3 transition-all"
+                                                >
+                                                    {language === 'en'
+                                                        ? (isVideo ? 'Watch Video' : isPhoto ? 'View Gallery' : 'Read Article')
+                                                        : (isVideo ? 'Tonton Video' : isPhoto ? 'Lihat Galeri' : 'Baca Artikel')
+                                                    }
+                                                    <span>→</span>
+                                                </Link>
+                                            </div>
                                         </div>
                                     </article>
                                 );

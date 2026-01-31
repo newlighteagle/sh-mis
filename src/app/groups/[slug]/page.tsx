@@ -3,7 +3,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { farmerGroupsData, type FarmerGroupProfile } from "@/lib/farmerGroupsData";
 import Image from "next/image";
-import { MapPin, Users, Sprout, Calendar, Building2, Award, Briefcase, Shield, Leaf, TrendingUp, Heart, CheckCircle2 } from "lucide-react";
+import { MapPin, Users, Sprout, Calendar, Building2, Award, Briefcase, Shield, Leaf, TrendingUp, Heart, CheckCircle2, Scale } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
@@ -72,17 +72,13 @@ export default function FarmerGroupProfilePage() {
                         {/* Logo */}
                         <div className="flex-shrink-0">
                             <div className="w-32 h-32 relative bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-emerald-200 dark:border-emerald-800">
-                                {group.assets.logo ? (
-                                    <Image
-                                        src={group.assets.logo}
-                                        alt={`${group.name} logo`}
-                                        width={128}
-                                        height={128}
-                                        className="object-contain"
-                                    />
-                                ) : (
-                                    <Sprout className="w-16 h-16 text-emerald-600" />
-                                )}
+                                <Image
+                                    src={group.assets.logo || "/images/no-data/default-logo.png"}
+                                    alt={`${group.name} logo`}
+                                    width={128}
+                                    height={128}
+                                    className="object-contain"
+                                />
                             </div>
                         </div>
 
@@ -132,6 +128,24 @@ export default function FarmerGroupProfilePage() {
                                         <p className="text-sm font-bold text-neutral-900 dark:text-white">{group.statistics.landParcels.toLocaleString()}</p>
                                     </div>
                                 </div>
+                                {group.statistics.productionTbs && (
+                                    <div className="flex items-center gap-2 px-4 py-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                                        <Scale className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                                        <div className="text-left">
+                                            <p className="text-xs text-neutral-600 dark:text-neutral-400">{language === 'en' ? 'Production (TBS)' : 'Produksi (TBS)'}</p>
+                                            <p className="text-sm font-bold text-neutral-900 dark:text-white">{group.statistics.productionTbs.toLocaleString()} <span className="text-xs font-normal text-neutral-500">ton/yr</span></p>
+                                        </div>
+                                    </div>
+                                )}
+                                {group.statistics.productivity && (
+                                    <div className="flex items-center gap-2 px-4 py-2 bg-rose-50 dark:bg-rose-900/20 rounded-lg">
+                                        <TrendingUp className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+                                        <div className="text-left">
+                                            <p className="text-xs text-neutral-600 dark:text-neutral-400">{language === 'en' ? 'Productivity' : 'Produktivitas'}</p>
+                                            <p className="text-sm font-bold text-neutral-900 dark:text-white">{group.statistics.productivity} <span className="text-xs font-normal text-neutral-500">ton/ha/yr</span></p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -150,23 +164,12 @@ export default function FarmerGroupProfilePage() {
                 {/* Management Photo */}
                 <div className="max-w-5xl mx-auto mb-16">
                     <div className="relative w-full h-96 bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
-                        {group.assets.managementPhoto ? (
-                            <Image
-                                src={group.assets.managementPhoto}
-                                alt={`${group.name} management`}
-                                fill
-                                className="object-cover"
-                            />
-                        ) : (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="text-center">
-                                    <Users className="w-16 h-16 text-neutral-400 dark:text-neutral-600 mx-auto mb-4" />
-                                    <p className="text-neutral-500 dark:text-neutral-400 font-medium">
-                                        {language === 'en' ? 'Management Photo Coming Soon' : 'Foto Pengurus Segera Hadir'}
-                                    </p>
-                                </div>
-                            </div>
-                        )}
+                        <Image
+                            src={group.assets.managementPhoto || "/images/no-data/no-picture.jpg"}
+                            alt={`${group.name} management`}
+                            fill
+                            className="object-cover"
+                        />
                     </div>
                 </div>
 
@@ -293,8 +296,8 @@ export default function FarmerGroupProfilePage() {
                                     key={tab.key}
                                     onClick={() => setActiveActivityTab(tab.key)}
                                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${isActive
-                                            ? 'bg-emerald-600 text-white shadow-lg'
-                                            : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700 hover:border-emerald-400'
+                                        ? 'bg-emerald-600 text-white shadow-lg'
+                                        : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700 hover:border-emerald-400'
                                         }`}
                                 >
                                     <Icon className="w-4 h-4" />
