@@ -2,6 +2,7 @@ export const translations = {
     en: {
         // Navbar
         nav: {
+            home: "Home",
             community: "Community",
             activity: "Activity",
             media: "Media",
@@ -89,6 +90,7 @@ export const translations = {
     id: {
         // Navbar
         nav: {
+            home: "Beranda",
             community: "Komunitas",
             activity: "Kegiatan",
             media: "Media",

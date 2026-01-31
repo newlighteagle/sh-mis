@@ -1,0 +1,258 @@
+"use client";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getMediaByType, mediaTypes, MediaItem } from "@/lib/mediaData";
+import ContentSidebar, { SidebarCategory } from "@/components/ContentSidebar";
+import { Newspaper, Camera, Video, Calendar, User, Clock, MapPin, Eye } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { getAllMedia } from "@/lib/mediaData";
+import { useParams } from "next/navigation";
+
+export default function MediaTypePage() {
+    const params = useParams();
+    const { language } = useLanguage();
+    const typeParam = params.type as string;
+
+    // Map URL slug to type
+    const typeMap: Record<string, 'article' | 'photo' | 'video'> = {
+        'articles': 'article',
+        'photos': 'photo',
+        'videos': 'video'
+    };
+
+    const mediaType = typeMap[typeParam];
+    const mediaItems = mediaType ? getMediaByType(mediaType) : [];
+    const typeMeta = mediaType ? mediaTypes[mediaType] : null;
+
+    // Prepare sidebar categories
+    const sidebarCategories: SidebarCategory[] = [
+        {
+            key: 'article',
+            label: mediaTypes.article,
+            icon: Newspaper,
+            count: getMediaByType('article').length,
+            href: '/media/articles'
+        },
+        {
+            key: 'photo',
+            label: mediaTypes.photo,
+            icon: Camera,
+            count: getMediaByType('photo').length,
+            href: '/media/photos'
+        },
+        {
+            key: 'video',
+            label: mediaTypes.video,
+            icon: Video,
+            count: getMediaByType('video').length,
+            href: '/media/videos'
+        }
+    ];
+
+    if (!mediaType || !typeMeta) {
+        return (
+            <main className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pt-24 pb-16">
+                <div className="container mx-auto px-6">
+                    <div className="text-center py-16">
+                        <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
+                            {language === 'en' ? 'Type Not Found' : 'Tipe Tidak Ditemukan'}
+                        </h1>
+                        <Link href="/media" className="text-blue-600 dark:text-blue-400 hover:underline">
+                            {language === 'en' ? 'Back to All Media' : 'Kembali ke Semua Media'}
+                        </Link>
+                    </div>
+                </div>
+            </main>
+        );
+    }
+
+    return (
+        <main className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pt-24 pb-16">
+            <div className="container mx-auto px-6">
+                {/* Page Header */}
+                <div className="mb-12">
+                    <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-3">
+                        {language === 'en' ? typeMeta.en : typeMeta.id}
+                    </h1>
+                    {/* Breadcrumb - inline below title */}
+                    <div className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-500 h-5 mb-4">
+                        <Link href="/media" className="hover:text-blue-600 dark:hover:text-blue-400">
+                            {language === 'en' ? 'Media' : 'Media'}
+                        </Link>
+                        <span>›</span>
+                        <span className="text-neutral-700 dark:text-neutral-400">
+                            {language === 'en' ? typeMeta.en : typeMeta.id}
+                        </span>
+                    </div>
+                    <p className="text-base text-neutral-600 dark:text-neutral-400 max-w-3xl min-h-[3rem]">
+                        {language === 'en' ? typeMeta.description.en : typeMeta.description.id}
+                    </p>
+                </div>
+
+                {/* Layout: Sidebar + Content */}
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Sidebar */}
+                    <ContentSidebar
+                        categories={sidebarCategories}
+                        allHref="/media"
+                        allLabel={{ en: 'All Media', id: 'Semua Media' }}
+                        allIcon={Eye}
+                        totalCount={getAllMedia().length}
+                    />
+
+                    {/* Main Content Area (3/4) */}
+                    <div className="lg:w-3/4 w-full">
+                        {/* Media Grid */}
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {mediaItems.map((item) => {
+                                const isArticle = item.type === 'article';
+                                const isPhoto = item.type === 'photo';
+                                const isVideo = item.type === 'video';
+
+                                return (
+                                    <article
+                                        key={item.id}
+                                        className="group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300"
+                                    >
+                                        {/* Cover Image/Thumbnail */}
+                                        <div className="relative w-full h-56 bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/20 dark:to-cyan-900/20">
+                                            {(isArticle && item.coverImage) || (isPhoto && item.images[0]?.url) || (isVideo && item.thumbnail) ? (
+                                                <>
+                                                    <Image
+                                                        src={isArticle ? item.coverImage : isPhoto ? item.images[0].url : item.thumbnail}
+                                                        alt={language === 'en' ? item.title.en : item.title.id}
+                                                        fill
+                                                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                                                    />
+                                                    {/* Video Play Icon Overlay */}
+                                                    {isVideo && (
+                                                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                                                            <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                                <Video className="w-8 h-8 text-neutral-900" />
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                    {isArticle && <Newspaper className="w-16 h-16 text-blue-300 dark:text-blue-700" />}
+                                                    {isPhoto && <Camera className="w-16 h-16 text-cyan-300 dark:text-cyan-700" />}
+                                                    {isVideo && <Video className="w-16 h-16 text-purple-300 dark:text-purple-700" />}
+                                                </div>
+                                            )}
+
+                                            {/* Photo Count Badge */}
+                                            {isPhoto && (
+                                                <div className="absolute top-4 right-4">
+                                                    <span className="px-3 py-1 bg-black/50 text-white text-xs font-semibold rounded-full flex items-center gap-1">
+                                                        <Camera className="w-3 h-3" />
+                                                        {item.images.length}
+                                                    </span>
+                                                </div>
+                                            )}
+
+                                            {/* Video Duration Badge */}
+                                            {isVideo && (
+                                                <div className="absolute bottom-4 right-4">
+                                                    <span className="px-2 py-1 bg-black/70 text-white text-xs font-semibold rounded">
+                                                        {item.duration}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="p-6">
+                                            <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                {language === 'en' ? item.title.en : item.title.id}
+                                            </h2>
+
+                                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
+                                                {language === 'en'
+                                                    ? (isArticle ? item.excerpt.en : item.description.en)
+                                                    : (isArticle ? item.excerpt.id : item.description.id)
+                                                }
+                                            </p>
+
+                                            {/* Meta Information */}
+                                            <div className="space-y-2 mb-4">
+                                                <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500">
+                                                    <Calendar className="w-4 h-4" />
+                                                    <span>
+                                                        {new Date(item.publishDate || item.date).toLocaleDateString(language === 'en' ? 'en-US' : 'id-ID', {
+                                                            year: 'numeric',
+                                                            month: 'long',
+                                                            day: 'numeric'
+                                                        })}
+                                                    </span>
+                                                </div>
+
+                                                {isArticle && item.author && (
+                                                    <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500">
+                                                        <User className="w-4 h-4" />
+                                                        <span>{item.author}</span>
+                                                    </div>
+                                                )}
+
+                                                {isArticle && item.readTime && (
+                                                    <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500">
+                                                        <Clock className="w-4 h-4" />
+                                                        <span>{item.readTime}</span>
+                                                    </div>
+                                                )}
+
+                                                {isPhoto && item.location && (
+                                                    <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500">
+                                                        <MapPin className="w-4 h-4" />
+                                                        <span>{item.location}</span>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Tags */}
+                                            {isArticle && item.tags && item.tags.length > 0 && (
+                                                <div className="flex flex-wrap gap-2 mb-4">
+                                                    {item.tags.slice(0, 3).map((tag, idx) => (
+                                                        <span
+                                                            key={idx}
+                                                            className="px-2 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 text-xs rounded-md"
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            {/* Read/View More Link */}
+                                            <Link
+                                                href={`/media/${item.slug}`}
+                                                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold text-sm hover:gap-3 transition-all"
+                                            >
+                                                {language === 'en'
+                                                    ? (isVideo ? 'Watch Video' : isPhoto ? 'View Gallery' : 'Read Article')
+                                                    : (isVideo ? 'Tonton Video' : isPhoto ? 'Lihat Galeri' : 'Baca Artikel')
+                                                }
+                                                <span>→</span>
+                                            </Link>
+                                        </div>
+                                    </article>
+                                );
+                            })}
+                        </div>
+
+                        {/* No Media Message */}
+                        {mediaItems.length === 0 && (
+                            <div className="text-center py-16">
+                                <Eye className="w-16 h-16 text-neutral-300 dark:text-neutral-700 mx-auto mb-4" />
+                                <p className="text-neutral-500 dark:text-neutral-400">
+                                    {language === 'en' ? 'No media found in this type' : 'Tidak ada media ditemukan di tipe ini'}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </main>
+    );
+}

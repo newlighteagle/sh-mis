@@ -1,47 +1,61 @@
 "use client";
 
-import { Users, MapPin, TrendingUp } from "lucide-react";
+import { Users, MapPin, TrendingUp, LucideIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
+import { getAllFarmerGroups, getDistrictStats } from "@/lib/farmerGroupsData";
+
+// Visual configuration for districts
+const DISTRICT_VISUALS: Record<string, { icon: LucideIcon, gradient: string }> = {
+    kampar: {
+        icon: MapPin,
+        gradient: "from-emerald-500 to-teal-600",
+    },
+    rohul: {
+        icon: Users,
+        gradient: "from-teal-500 to-cyan-600",
+    },
+    siak: {
+        icon: TrendingUp,
+        gradient: "from-cyan-500 to-blue-600",
+    },
+    pelalawan: {
+        icon: MapPin,
+        gradient: "from-blue-500 to-indigo-600",
+    },
+};
 
 export default function CommunityProfile() {
     const { language } = useLanguage();
     const t = translations[language];
 
-    const districts = [
-        {
-            key: 'kampar' as const,
-            icon: MapPin,
-            groups: "10",
-            members: "2,838",
-            hectares: "9,536",
-            gradient: "from-emerald-500 to-teal-600",
-        },
-        {
-            key: 'rohul' as const,
-            icon: Users,
-            groups: "10",
-            members: "1,201",
-            hectares: "4,081",
-            gradient: "from-teal-500 to-cyan-600",
-        },
-        {
-            key: 'siak' as const,
-            icon: TrendingUp,
-            groups: "10",
-            members: "2,739",
-            hectares: "7,359",
-            gradient: "from-cyan-500 to-blue-600",
-        },
-        {
-            key: 'pelalawan' as const,
-            icon: MapPin,
-            groups: "1",
-            members: "418",
-            hectares: "1,273",
-            gradient: "from-blue-500 to-indigo-600",
-        },
-    ];
+    // Calculate Dynamic Stats
+    const allGroups = getAllFarmerGroups();
+    const totalGroups = allGroups.length;
+    const totalFarmers = allGroups.reduce((acc, g) => acc + g.statistics.totalFarmers, 0);
+
+    const districts = ['kampar', 'rohul', 'siak', 'pelalawan'].map(key => {
+        const stats = getDistrictStats(key);
+        const visual = DISTRICT_VISUALS[key];
+        const districtData = t.community.districts[key as keyof typeof t.community.districts];
+
+        return {
+            key,
+            ...visual,
+            name: districtData.name,
+            description: districtData.description,
+            groups: stats.groups.toString(),
+            members: stats.farmers.toLocaleString(language === 'en' ? 'en-US' : 'id-ID'),
+            hectares: stats.areaHa.toLocaleString(language === 'en' ? 'en-US' : 'id-ID'),
+
+            // Labels for display
+            labels: {
+                groups: districtData.groups,
+                members: districtData.members,
+                hectares: districtData.hectares
+            }
+        };
+    });
 
     return (
         <section id="community" className="py-24 bg-white dark:bg-neutral-900">
@@ -56,11 +70,46 @@ export default function CommunityProfile() {
                     </p>
                 </div>
 
+                {/* Impact Stats */}
+                <div className="mb-16 grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                    <div className="text-center">
+                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
+                            6+
+                        </div>
+                        <p className="text-neutral-600 dark:text-neutral-400">
+                            {language === 'en' ? 'Key Partners' : 'Mitra Kunci'}
+                        </p>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
+                            4
+                        </div>
+                        <p className="text-neutral-600 dark:text-neutral-400">
+                            {language === 'en' ? 'Districts Covered' : 'Kabupaten Terlayani'}
+                        </p>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
+                            {totalGroups}
+                        </div>
+                        <p className="text-neutral-600 dark:text-neutral-400">
+                            {language === 'en' ? 'Farmer Groups' : 'Kelompok Petani'}
+                        </p>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
+                            {totalFarmers.toLocaleString(language === 'en' ? 'en-US' : 'id-ID')}+
+                        </div>
+                        <p className="text-neutral-600 dark:text-neutral-400">
+                            {language === 'en' ? 'Farmers Supported' : 'Petani Didampingi'}
+                        </p>
+                    </div>
+                </div>
+
                 {/* Districts Grid */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {districts.map((district) => {
                         const Icon = district.icon;
-                        const districtData = t.community.districts[district.key];
 
                         return (
                             <div
@@ -79,26 +128,26 @@ export default function CommunityProfile() {
 
                                     {/* Title */}
                                     <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">
-                                        {districtData.name}
+                                        {district.name}
                                     </h3>
 
                                     {/* Description */}
                                     <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6 line-clamp-2">
-                                        {districtData.description}
+                                        {district.description}
                                     </p>
 
                                     {/* Stats */}
                                     <div className="space-y-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
                                         <div className="flex items-center justify-between">
-                                            <span className="text-sm text-neutral-600 dark:text-neutral-400">{districtData.groups}</span>
+                                            <span className="text-sm text-neutral-600 dark:text-neutral-400">{district.labels.groups}</span>
                                             <span className="text-lg font-bold text-neutral-900 dark:text-white">{district.groups}</span>
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-sm text-neutral-600 dark:text-neutral-400">{districtData.members}</span>
+                                            <span className="text-sm text-neutral-600 dark:text-neutral-400">{district.labels.members}</span>
                                             <span className="text-lg font-bold text-neutral-900 dark:text-white">{district.members}</span>
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-sm text-neutral-600 dark:text-neutral-400">{districtData.hectares}</span>
+                                            <span className="text-sm text-neutral-600 dark:text-neutral-400">{district.labels.hectares}</span>
                                             <span className="text-lg font-bold text-neutral-900 dark:text-white">{district.hectares}</span>
                                         </div>
                                     </div>

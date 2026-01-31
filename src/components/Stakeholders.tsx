@@ -59,42 +59,6 @@ export default function Stakeholders() {
                         </div>
                     ))}
                 </div>
-
-                {/* Impact Stats */}
-                <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
-                    <div className="text-center">
-                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                            6+
-                        </div>
-                        <p className="text-neutral-600 dark:text-neutral-400">
-                            {language === 'en' ? 'Key Partners' : 'Mitra Kunci'}
-                        </p>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                            4
-                        </div>
-                        <p className="text-neutral-600 dark:text-neutral-400">
-                            {language === 'en' ? 'Districts Covered' : 'Kabupaten Terlayani'}
-                        </p>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                            31
-                        </div>
-                        <p className="text-neutral-600 dark:text-neutral-400">
-                            {language === 'en' ? 'Farmer Groups' : 'Kelompok Petani'}
-                        </p>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                            7,000+
-                        </div>
-                        <p className="text-neutral-600 dark:text-neutral-400">
-                            {language === 'en' ? 'Farmers Supported' : 'Petani Didampingi'}
-                        </p>
-                    </div>
-                </div>
             </div>
         </section>
     );

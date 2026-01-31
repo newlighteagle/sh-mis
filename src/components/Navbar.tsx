@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, X, Sprout, Globe, Users, Image, LayoutDashboard, LogIn, Sun, Moon, Calendar, ChevronDown } from "lucide-react";
+import { Menu, X, Sprout, Globe, Users, Image, LayoutDashboard, LogIn, Sun, Moon, Calendar } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translations } from "@/lib/translations";
-import { menuData } from "@/lib/menuData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const { language, toggleLanguage } = useLanguage();
@@ -15,25 +14,21 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Mock admin login state
 
-  // Mobile accordion states
-  const [mobileCommunityOpen, setMobileCommunityOpen] = useState(false);
-  const [mobileActivityOpen, setMobileActivityOpen] = useState(false);
-  const [mobileMediaOpen, setMobileMediaOpen] = useState(false);
-  const [mobileDistrictOpen, setMobileDistrictOpen] = useState<string | null>(null);
-
-  const districtNames = {
-    kampar: language === 'en' ? 'Kampar' : 'Kampar',
-    rohul: language === 'en' ? 'Rokan Hulu' : 'Rokan Hulu',
-    siak: language === 'en' ? 'Siak' : 'Siak',
-    pelalawan: language === 'en' ? 'Pelalawan' : 'Pelalawan',
-  };
+  // Body scroll lock effect
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
+          {/* Logo - Clickable */}
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg">
               <Sprout className="w-6 h-6 text-white" />
             </div>
@@ -41,87 +36,46 @@ export default function Navbar() {
               <h1 className="text-lg font-bold text-neutral-900 dark:text-white">Smallholder HUB</h1>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">Sawit Swadaya</p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            {/* Community Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-2">
-                <Users className="w-4 h-4" />
-                {t.nav.community}
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              {/* Dropdown Panel */}
-              <div className="absolute top-full left-0 mt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700 py-2">
-                  {Object.entries(menuData.community).map(([districtKey, groups]) => (
-                    <div key={districtKey} className="group/district relative">
-                      <div className="px-4 pr-8 py-2 text-sm font-semibold text-neutral-900 dark:text-white hover:bg-emerald-50 dark:hover:bg-emerald-900/20 cursor-pointer flex items-center justify-between">
-                        {districtNames[districtKey as keyof typeof districtNames]}
-                        <ChevronDown className="w-3 h-3 -rotate-90" />
-                      </div>
-                      {/* Nested submenu with small gap */}
-                      <div className="hidden group-hover/district:block absolute left-full top-0 ml-0.5 w-64 bg-white dark:bg-neutral-800 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700 py-2">
-                        {groups.map((group) => (
-                          <Link
-                            key={group.id}
-                            href={group.href || `#${group.id}`}
-                            className="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 dark:hover:text-emerald-400"
-                          >
-                            {group.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            {/* Home Link */}
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-2"
+            >
+              <Sprout className="w-4 h-4" />
+              {t.nav.home}
+            </Link>
 
-            {/* Activity Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-2">
-                <Calendar className="w-4 h-4" />
-                {t.nav.activity}
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              <div className="absolute top-full left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700 py-2">
-                  {menuData.activity.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#activity-${item.id}`}
-                      className="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 dark:hover:text-emerald-400"
-                    >
-                      {language === 'en' ? item.nameEn : item.nameId}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
+            {/* Community Link */}
+            <Link
+              href="/community"
+              className="flex items-center gap-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-2"
+            >
+              <Users className="w-4 h-4" />
+              {t.nav.community}
+            </Link>
 
-            {/* Media Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-2">
-                <Image className="w-4 h-4" />
-                {t.nav.media}
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700 py-2">
-                  {menuData.media.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#media-${item.id}`}
-                      className="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 dark:hover:text-emerald-400"
-                    >
-                      {language === 'en' ? item.nameEn : item.nameId}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
+
+            {/* Activity Link */}
+            <Link
+              href="/activities"
+              className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-2"
+            >
+              <Calendar className="w-4 h-4" />
+              {t.nav.activity}
+            </Link>
+
+            {/* Media Link */}
+            <Link
+              href="/media"
+              className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-2"
+            >
+              <Image className="w-4 h-4" />
+              {t.nav.media}
+            </Link>
 
             {/* Dashboard Link */}
             {isLoggedIn && (
@@ -166,135 +120,89 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-neutral-200 dark:border-neutral-800 pt-4 space-y-2">
-            {/* Community Accordion */}
-            <div>
-              <button
-                onClick={() => setMobileCommunityOpen(!mobileCommunityOpen)}
-                className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+          <div className="fixed inset-x-0 top-[72px] bottom-0 z-40 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 md:hidden overflow-y-auto h-[calc(100vh-72px)] animate-in slide-in-from-top-5 duration-200">
+            <div className="container mx-auto px-6 py-6 space-y-2 pb-32">
+              {/* Home Link */}
+              <Link
+                href="/"
+                className="flex items-center gap-3 px-4 py-3.5 text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl transition-all font-medium"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="flex items-center gap-3">
-                  <Users className="w-5 h-5" />
-                  {t.nav.community}
-                </span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileCommunityOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileCommunityOpen && (
-                <div className="ml-4 mt-2 space-y-1">
-                  {Object.entries(menuData.community).map(([districtKey, groups]) => (
-                    <div key={districtKey}>
-                      <button
-                        onClick={() => setMobileDistrictOpen(mobileDistrictOpen === districtKey ? null : districtKey)}
-                        className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
-                      >
-                        {districtNames[districtKey as keyof typeof districtNames]}
-                        <ChevronDown className={`w-3 h-3 transition-transform ${mobileDistrictOpen === districtKey ? 'rotate-180' : ''}`} />
-                      </button>
-                      {mobileDistrictOpen === districtKey && (
-                        <div className="ml-4 mt-1 space-y-1">
-                          {groups.map((group) => (
-                            <Link
-                              key={group.id}
-                              href={group.href || `#${group.id}`}
-                              className="block px-4 py-2 text-sm text-neutral-600 dark:text-neutral-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg"
-                            >
-                              {group.name}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                <Sprout className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span>{t.nav.home}</span>
+              </Link>
 
-            {/* Activity Accordion */}
-            <div>
-              <button
-                onClick={() => setMobileActivityOpen(!mobileActivityOpen)}
-                className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+              {/* Community Link */}
+              <Link
+                href="/community"
+                className="flex items-center gap-3 px-4 py-3.5 text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl transition-all font-medium"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="flex items-center gap-3">
-                  <Calendar className="w-5 h-5" />
-                  {t.nav.activity}
-                </span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileActivityOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileActivityOpen && (
-                <div className="ml-4 mt-2 space-y-1">
-                  {menuData.activity.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#activity-${item.id}`}
-                      className="block px-4 py-2 text-sm text-neutral-600 dark:text-neutral-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg"
-                    >
-                      {language === 'en' ? item.nameEn : item.nameId}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+                <Users className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span>{t.nav.community}</span>
+              </Link>
 
-            {/* Media Accordion */}
-            <div>
-              <button
-                onClick={() => setMobileMediaOpen(!mobileMediaOpen)}
-                className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+              {/* Activity Link */}
+              <Link
+                href="/activities"
+                className="flex items-center gap-3 px-4 py-3.5 text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl transition-all font-medium"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="flex items-center gap-3">
-                  <Image className="w-5 h-5" />
-                  {t.nav.media}
-                </span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileMediaOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileMediaOpen && (
-                <div className="ml-4 mt-2 space-y-1">
-                  {menuData.media.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#media-${item.id}`}
-                      className="block px-4 py-2 text-sm text-neutral-600 dark:text-neutral-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg"
-                    >
-                      {language === 'en' ? item.nameEn : item.nameId}
-                    </a>
-                  ))}
-                </div>
+                <Calendar className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span>{t.nav.activity}</span>
+              </Link>
+
+              {/* Media Link */}
+              <Link
+                href="/media"
+                className="flex items-center gap-3 px-4 py-3.5 text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl transition-all font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Image className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span>{t.nav.media}</span>
+              </Link>
+
+              {/* Dashboard Link */}
+              {isLoggedIn && (
+                <a
+                  href="#dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3.5 text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl transition-all font-medium"
+                >
+                  <LayoutDashboard className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <span>{t.nav.dashboard}</span>
+                </a>
               )}
+
+              <div className="my-4 border-t border-neutral-100 dark:border-neutral-800" />
+
+              {/* Theme & Language Toggles */}
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={toggleTheme}
+                  className="flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-xl transition-colors"
+                >
+                  {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+                  <span>{theme === 'light' ? 'Dark' : 'Light'}</span>
+                </button>
+
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-xl transition-colors"
+                >
+                  <Globe className="w-4 h-4" />
+                  <span>{language.toUpperCase()}</span>
+                </button>
+              </div>
+
+              {/* Login Button */}
+              <button className="w-full flex items-center justify-center gap-2 px-6 py-3.5 mt-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all">
+                <LogIn className="w-5 h-5" />
+                {t.nav.login}
+              </button>
             </div>
-
-            {/* Dashboard Link */}
-            {isLoggedIn && (
-              <a href="#dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors">
-                <LayoutDashboard className="w-5 h-5" />
-                {t.nav.dashboard}
-              </a>
-            )}
-
-            {/* Theme Toggle Mobile */}
-            <button
-              onClick={toggleTheme}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
-            >
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-              <span>{theme === 'light' ? (language === 'en' ? 'Dark Mode' : 'Mode Gelap') : (language === 'en' ? 'Light Mode' : 'Mode Terang')}</span>
-            </button>
-
-            {/* Language Toggle Mobile */}
-            <button
-              onClick={toggleLanguage}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
-            >
-              <Globe className="w-5 h-5" />
-              <span>Language: <span className="font-semibold">{language === 'en' ? 'English' : 'Indonesia'}</span></span>
-            </button>
-
-            <button className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all duration-200">
-              <LogIn className="w-5 h-5" />
-              {t.nav.login}
-            </button>
           </div>
         )}
       </div>

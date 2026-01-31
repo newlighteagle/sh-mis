@@ -17,11 +17,14 @@
     - [x] Community Profile (4 districts: Kampar, Rohul, Siak, Pelalawan)
     - [x] Media & Activities (photo galleries with 3 generated images, success stories)
     - [x] Stakeholder Support (partners, sponsors, collaborators)
-- [x] Farmer Group Profile Pages:
+- [x] Farmer Group Profile Pages (CMS-Ready Structure):
     - [x] Created 5 sample profiles (FPS Sei Garo, KP Kusuma Bakti Mandiri, KUD Intan Makmur, KPM Karya Maju, KUD Mulia)
-    - [x] Bilingual content with history, geography, members, land area, gapoktan associations
-    - [x] Activity cards with descriptions
-    - [x] Responsive design with logo, team photo sections
+    - [x] Standardized data structure: Basic Info, Statistics, Gapoktan, Content, Categorized Activities
+    - [x] Enhanced fields: Governance, Facilities, Land Parcels, Land Types breakdown, Chairman info
+    - [x] Bilingual content (EN/ID): History, Geography, Governance, Facilities
+    - [x] Activity categorization with filtering: Training, BMP, HCV, HSE/K3, Business Dev, GEDSI, Certification
+    - [x] Responsive 2-column layout with organized sections
+    - [x] Activity tabs with counts and outcomes
     - [x] Integrated with dropdown navigation
 - [ ] Community Page: Filter based on 4 Districts.
 - [ ] Media Page: Activities, events, and community stories.
