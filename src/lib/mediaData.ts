@@ -270,7 +270,11 @@ export const mediaData = {
 // Helper functions
 export const getAllMedia = (): MediaItem[] => {
     return [...articles, ...photos, ...videos].sort(
-        (a, b) => new Date(b.publishDate || b.date).getTime() - new Date(a.publishDate || a.date).getTime()
+        (a, b) => {
+            const dateA = a.type === 'photo' ? a.date : a.publishDate;
+            const dateB = b.type === 'photo' ? b.date : b.publishDate;
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
+        }
     );
 };
 

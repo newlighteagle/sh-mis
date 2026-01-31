@@ -180,7 +180,7 @@ export default function MediaTypePage() {
                                                 <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500">
                                                     <Calendar className="w-4 h-4" />
                                                     <span>
-                                                        {new Date(item.publishDate || item.date).toLocaleDateString(language === 'en' ? 'en-US' : 'id-ID', {
+                                                        {new Date(item.type === 'photo' ? item.date : item.publishDate).toLocaleDateString(language === 'en' ? 'en-US' : 'id-ID', {
                                                             year: 'numeric',
                                                             month: 'long',
                                                             day: 'numeric'
