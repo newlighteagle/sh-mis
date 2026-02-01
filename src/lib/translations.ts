@@ -86,6 +86,35 @@ export const translations = {
             close: "Close",
             menu: "Menu",
         },
+        // Dashboard
+        dashboard: {
+            layers: {
+                title: "Map Layers",
+                subtitle: "Adjust data visibility on map",
+                admin: { title: "Admin Boundaries", subtitle: "District/City" },
+                farmers: { title: "Farmer Groups", subtitle: "Distribution Points" },
+                mills: { title: "Mills", subtitle: "Palm Oil Mills" }
+            },
+            info: {
+                title: "Information Dashboard",
+                summary: "Data Summary",
+                details: "Detail Info",
+                active: "(Active)",
+                noSelection: "Click a map point (Farmer Group or Mill) to view details."
+            },
+            stats: {
+                farmers: "Total Farmers",
+                area: "Total Area",
+                production: "Production",
+                productivity: "Productivity",
+                gapoktan: "Gapoktan",
+                mills: "Mills (PKS)"
+            },
+            charts: {
+                productionTrend: "Monthly Production Trend (Dummy)",
+                topMills: "Supply to Mills (Top 5)"
+            }
+        },
     },
     id: {
         // Navbar
@@ -173,6 +202,35 @@ export const translations = {
             error: "Terjadi kesalahan",
             close: "Tutup",
             menu: "Menu",
+        },
+        // Dashboard
+        dashboard: {
+            layers: {
+                title: "Layer Peta",
+                subtitle: "Atur visibilitas data pada peta",
+                admin: { title: "Batas Administrasi", subtitle: "Kabupaten/Kota" },
+                farmers: { title: "Lokasi Kelompok Tani", subtitle: "Titik Sebaran" },
+                mills: { title: "Lokasi Pabrik (Mills)", subtitle: "Pabrik Kelapa Sawit" }
+            },
+            info: {
+                title: "Dashboard Informasi",
+                summary: "Ringkasan Data (Summary)",
+                details: "Info Detail",
+                active: "(Aktif)",
+                noSelection: "Klik salah satu titik di peta (Kelompok Tani atau Pabrik) untuk melihat detail informasi."
+            },
+            stats: {
+                farmers: "Total Petani",
+                area: "Luas Lahan",
+                production: "Produksi",
+                productivity: "Produktivitas",
+                gapoktan: "Gapoktan",
+                mills: "Pabrik (PKS)"
+            },
+            charts: {
+                productionTrend: "Tren Produksi Bulanan (Dummy)",
+                topMills: "Supply ke Pabrik (Top 5)"
+            }
         },
     },
 };

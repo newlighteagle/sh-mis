@@ -141,10 +141,10 @@ export default function MediaTypePage() {
                                 return (
                                     <article
                                         key={item.id}
-                                        className={`group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300 ${viewMode === 'list' ? 'flex flex-col md:flex-row' : ''}`}
+                                        className={`group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300 ${viewMode === 'list' ? 'flex flex-row' : ''}`}
                                     >
                                         {/* Cover Image/Thumbnail */}
-                                        <div className={`relative bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/20 dark:to-cyan-900/20 ${viewMode === 'list' ? 'w-full md:w-72 h-56 md:h-auto shrink-0' : 'w-full h-56'}`}>
+                                        <div className={`relative bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/20 dark:to-cyan-900/20 ${viewMode === 'list' ? 'w-16 h-16 md:w-72 md:h-auto shrink-0' : 'w-full h-56'}`}>
                                             {(isArticle && item.coverImage) || (isPhoto && item.images[0]?.url) || (isVideo && item.thumbnail) ? (
                                                 <>
                                                     <Image
@@ -156,22 +156,22 @@ export default function MediaTypePage() {
                                                     {/* Video Play Icon Overlay */}
                                                     {isVideo && (
                                                         <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                                                            <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                                <Video className="w-8 h-8 text-neutral-900" />
+                                                            <div className="w-8 h-8 md:w-16 md:h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                                <Video className="w-4 h-4 md:w-8 md:h-8 text-neutral-900" />
                                                             </div>
                                                         </div>
                                                     )}
                                                 </>
                                             ) : (
                                                 <div className="absolute inset-0 flex items-center justify-center">
-                                                    {isArticle && <Newspaper className="w-16 h-16 text-blue-300 dark:text-blue-700" />}
-                                                    {isPhoto && <Camera className="w-16 h-16 text-cyan-300 dark:text-cyan-700" />}
-                                                    {isVideo && <Video className="w-16 h-16 text-purple-300 dark:text-purple-700" />}
+                                                    {isArticle && <Newspaper className="w-8 h-8 md:w-16 md:h-16 text-blue-300 dark:text-blue-700" />}
+                                                    {isPhoto && <Camera className="w-8 h-8 md:w-16 md:h-16 text-cyan-300 dark:text-cyan-700" />}
+                                                    {isVideo && <Video className="w-8 h-8 md:w-16 md:h-16 text-purple-300 dark:text-purple-700" />}
                                                 </div>
                                             )}
 
                                             {/* Type Badge */}
-                                            <div className="absolute top-4 left-4">
+                                            <div className={`absolute top-4 left-4 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                                 <span className={`px-3 py-1 text-white text-xs font-semibold rounded-full ${isArticle ? 'bg-blue-600' : isPhoto ? 'bg-cyan-600' : 'bg-purple-600'
                                                     }`}>
                                                     {language === 'en' ? mediaTypes[item.type].en : mediaTypes[item.type].id}
@@ -180,7 +180,7 @@ export default function MediaTypePage() {
 
                                             {/* Photo Count Badge */}
                                             {isPhoto && (
-                                                <div className="absolute top-4 right-4">
+                                                <div className={`absolute top-4 right-4 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                                     <span className="px-3 py-1 bg-black/50 text-white text-xs font-semibold rounded-full flex items-center gap-1">
                                                         <Camera className="w-3 h-3" />
                                                         {item.images.length}
@@ -190,7 +190,7 @@ export default function MediaTypePage() {
 
                                             {/* Video Duration Badge */}
                                             {isVideo && (
-                                                <div className="absolute bottom-4 right-4">
+                                                <div className={`absolute bottom-4 right-4 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                                     <span className="px-2 py-1 bg-black/70 text-white text-xs font-semibold rounded">
                                                         {item.duration}
                                                     </span>
@@ -199,13 +199,13 @@ export default function MediaTypePage() {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-6 flex flex-col flex-1">
+                                        <div className={`${viewMode === 'list' ? 'p-2 md:p-6' : 'p-6'} flex flex-col flex-1`}>
                                             <div className="mb-auto">
-                                                <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                <h2 className={`${viewMode === 'list' ? 'text-sm md:text-xl' : 'text-xl'} font-bold text-neutral-900 dark:text-white mb-1 md:mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors`}>
                                                     {language === 'en' ? item.title.en : item.title.id}
                                                 </h2>
 
-                                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
+                                                <p className={`text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                                     {language === 'en'
                                                         ? (isArticle ? item.excerpt.en : item.description.en)
                                                         : (isArticle ? item.excerpt.id : item.description.id)
@@ -214,7 +214,7 @@ export default function MediaTypePage() {
                                             </div>
 
                                             {/* Meta Information */}
-                                            <div className="space-y-2 mb-4">
+                                            <div className={`space-y-1 md:space-y-2 mb-2 md:mb-4 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                                 <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500">
                                                     <Calendar className="w-4 h-4" />
                                                     <span>
@@ -250,7 +250,7 @@ export default function MediaTypePage() {
 
                                             {/* Tags */}
                                             {isArticle && item.tags && item.tags.length > 0 && (
-                                                <div className="flex flex-wrap gap-2 mb-4">
+                                                <div className={`flex flex-wrap gap-2 mb-2 md:mb-4 ${viewMode === 'list' ? 'hidden md:flex' : ''}`}>
                                                     {item.tags.slice(0, 3).map((tag, idx) => (
                                                         <span
                                                             key={idx}

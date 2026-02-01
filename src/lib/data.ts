@@ -480,6 +480,24 @@ export const farmerGroupsData: Record<string, FarmerGroupProfile> = {
         },
         activities: { training: [], bmp: [], hcv: [], hse: [], businessDev: [], gedsi: [], sustainableStandards: [] }
     },
+    'pangkalan-baru-sejahtera': {
+        id: 'pangkalan-baru-sejahtera',
+        slug: 'pangkalan-baru-sejahtera',
+        name: 'Pangkalan Baru Sejahtera',
+        district: 'kampar',
+        established: 2016, // Placeholder
+        legalStatus: { en: 'Cooperative', id: 'Koperasi' }, // Placeholder
+        assets: { logo: '', managementPhoto: '' },
+        statistics: { totalFarmers: 150, landParcels: 300, totalAreaHa: 450, landTypes: { mineral: 450 } }, // Placeholder
+        gapoktan: [{ name: 'Pangkalan Sejahtera', members: 150 }], // Placeholder
+        content: {
+            history: { en: 'History details to be added.', id: 'Detail sejarah akan ditambahkan.' },
+            geography: { en: 'Geography details to be added.', id: 'Detail geografi akan ditambahkan.' },
+            governance: { en: 'Governance details to be added.', id: 'Detail tata kelola akan ditambahkan.' },
+            facilities: { en: 'Facilities details to be added.', id: 'Detail fasilitas akan ditambahkan.' }
+        },
+        activities: { training: [], bmp: [], hcv: [], hse: [], businessDev: [], gedsi: [], sustainableStandards: [] }
+    },
 
     // Rokan Hulu Groups
     'kud-tujuh-permata': {

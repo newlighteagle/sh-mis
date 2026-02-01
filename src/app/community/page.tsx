@@ -189,42 +189,42 @@ export default function CommunityPage() {
                                         </>
                                     ) : (
                                         // List View Layout
-                                        <div className="flex flex-col md:flex-row p-6 items-center gap-6">
+                                        <div className="flex flex-row p-4 md:p-6 items-center gap-4 md:gap-6">
                                             {/* Logo (Smaller) */}
-                                            <div className="flex-shrink-0 relative w-24 h-24 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/20 dark:to-green-900/20 rounded-xl flex items-center justify-center p-2">
+                                            <div className="flex-shrink-0 relative w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/20 dark:to-green-900/20 rounded-xl flex items-center justify-center p-2">
                                                 <Image
                                                     src={group.assets.logo}
                                                     alt={group.name}
                                                     fill
-                                                    className="object-contain p-2"
+                                                    className="object-contain p-1 md:p-2"
                                                 />
                                             </div>
 
                                             {/* Middle Content */}
-                                            <div className="flex-1 text-center md:text-left">
-                                                <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-                                                    <h3 className="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                            <div className="flex-1 text-left">
+                                                <div className="flex flex-wrap items-center justify-start gap-2 md:gap-3 mb-1 md:mb-2">
+                                                    <h3 className="text-base md:text-xl font-bold text-neutral-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                                                         {group.name}
                                                     </h3>
-                                                    <span className="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-semibold rounded-full flex items-center gap-1">
+                                                    <span className="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-[10px] md:text-xs font-semibold rounded-full flex items-center gap-1">
                                                         <MapPin className="w-3 h-3" />
                                                         {districtMetadata[group.district as keyof typeof districtMetadata][language]}
                                                     </span>
                                                 </div>
-                                                <p className="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2 mb-3">
+                                                <p className="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2 mb-3 hidden md:block">
                                                     {language === 'en'
                                                         ? group.content.history.en.substring(0, 150) + '...'
                                                         : group.content.history.id.substring(0, 150) + '...'
                                                     }
                                                 </p>
-                                                <div className="flex items-center justify-center md:justify-start gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm group-hover:gap-3 transition-all">
+                                                <div className="flex items-center justify-start gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-xs md:text-sm group-hover:gap-3 transition-all">
                                                     {language === 'en' ? 'View Profile' : 'Lihat Profil'}
                                                     <span>→</span>
                                                 </div>
                                             </div>
 
                                             {/* Right Stats (Horizontal) */}
-                                            <div className="flex flex-row md:flex-col gap-4 border-t md:border-t-0 md:border-l border-neutral-100 dark:border-neutral-700 pt-4 md:pt-0 md:pl-6 w-full md:w-auto justify-between md:justify-center">
+                                            <div className="hidden md:flex flex-row md:flex-col gap-4 border-t md:border-t-0 md:border-l border-neutral-100 dark:border-neutral-700 pt-4 md:pt-0 md:pl-6 w-full md:w-auto justify-between md:justify-center">
                                                 <div className="text-center">
                                                     <div className="flex items-center justify-center gap-1 text-neutral-900 dark:text-white font-bold">
                                                         <Users className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />

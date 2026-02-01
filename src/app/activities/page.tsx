@@ -122,10 +122,10 @@ export default function ActivitiesPage() {
                             {activities.map((activity) => (
                                 <article
                                     key={activity.id}
-                                    className={`group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300 ${viewMode === 'list' ? 'flex flex-col md:flex-row' : ''}`}
+                                    className={`group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-xl transition-all duration-300 ${viewMode === 'list' ? 'flex flex-row' : ''}`}
                                 >
                                     {/* Cover Image */}
-                                    <div className={`relative bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/20 dark:to-teal-900/20 ${viewMode === 'list' ? 'w-full md:w-72 h-48 md:h-auto shrink-0' : 'w-full h-48'}`}>
+                                    <div className={`relative bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/20 dark:to-teal-900/20 ${viewMode === 'list' ? 'w-16 h-16 md:w-72 md:h-auto shrink-0' : 'w-full h-48'}`}>
                                         {activity.coverImage ? (
                                             <Image
                                                 src={activity.coverImage}
@@ -135,11 +135,11 @@ export default function ActivitiesPage() {
                                             />
                                         ) : (
                                             <div className="absolute inset-0 flex items-center justify-center">
-                                                <Calendar className="w-16 h-16 text-emerald-300 dark:text-emerald-700" />
+                                                <Calendar className="w-8 h-8 md:w-16 md:h-16 text-emerald-300 dark:text-emerald-700" />
                                             </div>
                                         )}
                                         {/* Category Badge */}
-                                        <div className="absolute top-4 left-4">
+                                        <div className={`absolute top-4 left-4 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                             <span className="px-3 py-1 bg-emerald-600 text-white text-xs font-semibold rounded-full">
                                                 {language === 'en'
                                                     ? activityCategories[activity.category].en
@@ -149,19 +149,19 @@ export default function ActivitiesPage() {
                                     </div>
 
                                     {/* Content */}
-                                    <div className="p-6 flex flex-col flex-1">
+                                    <div className={`${viewMode === 'list' ? 'p-2 md:p-6' : 'p-6'} flex flex-col flex-1`}>
                                         <div className="mb-auto">
-                                            <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                            <h2 className={`${viewMode === 'list' ? 'text-sm md:text-xl' : 'text-xl'} font-bold text-neutral-900 dark:text-white mb-1 md:mb-3 line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors`}>
                                                 {language === 'en' ? activity.title.en : activity.title.id}
                                             </h2>
 
-                                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
+                                            <p className={`text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                                 {language === 'en' ? activity.excerpt.en : activity.excerpt.id}
                                             </p>
                                         </div>
 
                                         {/* Meta Information */}
-                                        <div className="space-y-2 mb-4">
+                                        <div className={`space-y-1 md:space-y-2 mb-2 md:mb-4 ${viewMode === 'list' ? 'hidden md:block' : ''}`}>
                                             <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500">
                                                 <Calendar className="w-4 h-4" />
                                                 <span>

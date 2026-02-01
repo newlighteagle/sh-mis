@@ -39,7 +39,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-6">
             {/* Home Link */}
             <Link
               href="/"
@@ -79,10 +79,10 @@ export default function Navbar() {
 
             {/* Dashboard Link */}
             {isLoggedIn && (
-              <a href="#dashboard" className="flex items-center gap-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+              <Link href="/dashboard" className="flex items-center gap-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                 <LayoutDashboard className="w-4 h-4" />
                 {t.nav.dashboard}
-              </a>
+              </Link>
             )}
 
             {/* Theme Toggle */}
@@ -104,7 +104,7 @@ export default function Navbar() {
               <span className="font-semibold">{language.toUpperCase()}</span>
             </button>
 
-            <button className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-200">
+            <button className="flex items-center gap-2 px-4 xl:px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-200">
               <LogIn className="w-4 h-4" />
               {t.nav.login}
             </button>
@@ -113,7 +113,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+            className="lg:hidden p-2 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -122,7 +122,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="fixed inset-x-0 top-[72px] bottom-0 z-40 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 md:hidden overflow-y-auto h-[calc(100vh-72px)] animate-in slide-in-from-top-5 duration-200">
+          <div className="fixed inset-x-0 top-[72px] bottom-0 z-40 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 lg:hidden overflow-y-auto h-[calc(100vh-72px)] animate-in slide-in-from-top-5 duration-200">
             <div className="container mx-auto px-6 py-6 space-y-2 pb-32">
               {/* Home Link */}
               <Link
@@ -166,14 +166,14 @@ export default function Navbar() {
 
               {/* Dashboard Link */}
               {isLoggedIn && (
-                <a
-                  href="#dashboard"
+                <Link
+                  href="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-3 px-4 py-3.5 text-neutral-700 dark:text-neutral-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl transition-all font-medium"
                 >
                   <LayoutDashboard className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   <span>{t.nav.dashboard}</span>
-                </a>
+                </Link>
               )}
 
               <div className="my-4 border-t border-neutral-100 dark:border-neutral-800" />
