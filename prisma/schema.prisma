@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/client"
+  engineType = "library"
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique // Admin, Management, Operator, User
+  description String?
+  users       User[]
+
+  @@map("ref-role")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String?  // Nullable for now
+  roleId    String
+  role      Role     @relation(fields: [roleId], references: [id])
+  groupId   String?
+  group     Group?   @relation(fields: [groupId], references: [uid])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tbl-user")
+}
+
+model Group {
+  uid       String   @id @default(uuid())
+  abrv      String   @unique
+  name      String
+  is_active Boolean  @default(true) // defaults to true as is common for is_active
+  users     User[]
+
+  @@map("tbl-group")
+}
+
+model Province {
+  uid   String @id @default(uuid())
+  kode  String @unique
+  name  String
+
+  districts District[]
+
+  @@map("tbl-province")
+}
+
+model District {
+  uid        String   @id @default(uuid())
+  kode       String   @unique
+  name       String
+  provinceId String
+  province   Province @relation(fields: [provinceId], references: [uid])
+  farmerGroups FarmerGroup[]
+
+  @@map("tbl-district")
+}
+
+model FarmerGroup {
+  uid          String   @id @default(uuid())
+  districtKode String
+  district     District @relation(fields: [districtKode], references: [kode])
+  fgCode       String   @unique @map("fg_code")
+  abrv         String
+  shortName    String   @map("short_name")
+  fullName     String   @map("full_name")
+
+  @@map("tbl-farmer-group")
+}

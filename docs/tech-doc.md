@@ -36,6 +36,10 @@ Smallholder HUB - Sawit Swadaya is a Management Information System (MIS) develop
 - **Community Overview**: Interactive district cards with member counts and land area statistics
 - **Media Gallery**: Curated images showcasing farmer activities and success stories
 - **Stakeholder Section**: Partner organization showcase and impact statistics
+- **Public Dashboard**: Interactive geospatial dashboard with mill/group distribution and analytics
+- **Advanced View Options**: Toggle between Grid (Card) and List views with persistence
+- **Restricted Dashboard**: Authenticated area with Reports and Master Data.
+- **Master Data Management**: Full CRUD capabilities for Provinces, Districts, Groups, Farmer Groups, and Users.
 
 ### 🚧 **Planned (Future Phases)**
 
@@ -149,6 +153,7 @@ Future implementation will include:
 - **Icons**: Lucide React
 - **Language**: TypeScript
 - **State Management**: React Context API
+- **Maps**: MapLibre GL JS + React Map GL
 
 ### Future Backend
 - **Database**: PostgreSQL 15+ with PostGIS extension
@@ -179,6 +184,7 @@ sh-mis/
 ├── src/
 │   ├── app/                    # Next.js App Router pages
 │   │   ├── groups/[slug]/     # Dynamic farmer group profiles
+│   │   ├── dashboard/         # Public Dashboard
 │   │   ├── layout.tsx         # Root layout with Navbar/Footer
 │   │   ├── page.tsx           # Landing page
 │   │   └── globals.css        # Global styles
@@ -280,7 +286,35 @@ export const menuData = {
 - **Tablet**: Responsive layout with adjusted spacing
 - **Mobile**: Hamburger menu with nested accordions
 
-## 2. Bilingual Support
+## 2. Restricted Data Module (New)
+
+### Dashboard Architecture
+- **Route**: `/dashboard-restricted/[section]/[slug]` (Dynamic Routing)
+- **Layout**: Sidebar navigation (`AppSidebar`) with collapsible groups.
+- **Sections**:
+  - **Dashboard**: Visual analytics (Basic KPI charts, thematic scorecards).
+  - **Report**: Data tables with export functionality.
+  - **Master Data**: CRUD interfaces for farmers, groups, and parcels.
+  - **CMS**: Content management for the public landing page.
+
+### Generic View Components
+To facilitate rapid prototyping, the system uses generic view components that render content based on the active route slug:
+
+1. **DashboardGenericView**: Renders `recharts` graphs and `shadcn` scorecards based on `dummy-dashboard.ts` themes.
+2. **ReportView**: Standardized table layout with "Export to XLS/PDF" actions using `dummy-report.ts`.
+3. **MasterDataView**: Reusable CRUD table for master data entities (Farmers, Groups) using `dummy-master.ts`.
+4. **CmsView**: Dedicated interface for managing Landing Page content (Home, Community, Activity, Media) using `dummy-cms.ts`.
+
+### Data Layer (Prototype)
+- **Location**: `src/lib/restrict-data/`
+- **Purpose**: Static TypeScript objects that mimic future Database schema.
+- **Files**:
+  - `data-menu.ts`: Sidebar configuration.
+  - `data-farmer.ts`: KPI and Chart data.
+  - `dummy-dashboard.ts`: Thematic scorecards.
+  - `dummy-cms.ts`: Public content data.
+
+## 3. Bilingual Support
 
 ### Language Context
 ```typescript
@@ -587,53 +621,54 @@ module.exports = {
 
 # Database Schema
 
-## Future Implementation
+## Current Implementation
 
 ### Core Tables
 
-#### users
-- `id`: UUID (PK)
-- `email`: VARCHAR(255) UNIQUE
-- `name`: VARCHAR(255)
-- `role`: ENUM('admin', 'staff', 'farmer_leader')
-- `created_at`: TIMESTAMP
-- `updated_at`: TIMESTAMP
+#### tbl-province
+- `id`: Int (PK)
+- `uid`: UUID
+- `kode`: String (Unique)
+- `name`: String
 
-#### farmer_groups
-- `id`: UUID (PK)
-- `slug`: VARCHAR(100) UNIQUE
-- `name`: VARCHAR(255)
-- `district_id`: UUID (FK → districts)
-- `logo_url`: VARCHAR(500)
-- `history_en`: TEXT
-- `history_id`: TEXT
-- `member_count`: INTEGER
-- `land_area_ha`: DECIMAL(10,2)
-- `created_at`: TIMESTAMP
+#### tbl-district
+- `id`: Int (PK)
+- `uid`: UUID
+- `kode`: String (Unique)
+- `name`: String
+- `provinceId`: UUID (FK)
 
-#### districts
-- `id`: UUID (PK)
-- `name`: VARCHAR(100)
-- `geometry`: GEOMETRY(Polygon, 4326)
+#### tbl-farmer-group
+- `id`: Int (PK)
+- `uid`: UUID
+- `fgCode`: String (Unique)
+- `shortName`: String
+- `fullName`: String
+- `districtKode`: String (FK)
 
-#### activities
-- `id`: UUID (PK)
-- `farmer_group_id`: UUID (FK → farmer_groups)
-- `title_en`: VARCHAR(255)
-- `title_id`: VARCHAR(255)
-- `description_en`: TEXT
-- `description_id`: TEXT
-- `activity_date`: DATE
-- `image_url`: VARCHAR(500)
+#### tbl-group
+- `id`: Int (PK)
+- `uid`: UUID
+- `abrv`: String (Unique)
+- `name`: String
+- `is_active`: Boolean
+
+#### tbl-user
+- `id`: Int (PK)
+- `uid`: UUID
+- `email`: String (Unique)
+- `name`: String
+- `roleId`: UUID (FK)
+- `groupId`: UUID (FK, Optional)
 
 ## Entity Relationship Diagram
 
 ```mermaid
 erDiagram
-    DISTRICTS ||--o{ FARMER_GROUPS : contains
-    FARMER_GROUPS ||--o{ ACTIVITIES : conducts
-    FARMER_GROUPS ||--o{ GAPOKTAN : includes
-    USERS ||--o{ ACTIVITIES : manages
+    PROVINCE ||--o{ DISTRICT : contains
+    DISTRICT ||--o{ FARMER_GROUP : contains
+    ROLE ||--o{ USER : assigned_to
+    GROUP ||--o{ USER : belongs_to
 ```
 
 ---
@@ -786,9 +821,33 @@ CMD ["npm", "start"]
 - [ ] PostgreSQL database integration
 - [ ] User authentication and authorization
 - [ ] Interactive land mapping with Leaflet
-- [ ] Assessment forms (BMP, HCV, HSE)
-- [ ] GeoServer integration for spatial data
-- [ ] Reporting and export functionality
+
+## Version 1.2.0 (Restricted Dashboard) - February 2026
+
+### Added
+- ✅ **Restricted Dashboard Module**: New layout with Sidebar navigation.
+- ✅ **Dynamic Routing**: Unified router for Dashboard, Report, Master Data, and CMS.
+- ✅ **Generic Views**: Reusable components for Charts, Reports, and CRUD tables.
+- ✅ **Dummy Data Layer**: Structured static data mimicking future DB schema.
+- ✅ **CMS Prototype**: Content management for Home, Community, Activity, and Media sections.
+- ✅ **Interactive Charts**: Recharts integration for Farmer & Land data with toggleable series.
+
+## Version 1.1.0 (Phase 1.5) - February 2026
+
+### Added
+- ✅ **Public Dashboard**:
+  - Full-screen interactive map (MapLibre)
+  - Layer toggles (Farmer Groups, Mills, Admin Boundaries)
+  - Analytical sidebars (Summary charts, Detail views)
+  - Mobile/Tablet responsive adjustments
+- ✅ **View System**:
+  - Toggle between Card (Grid) and List views
+  - Persistent user preference (localStorage)
+  - Optmized mobile list layout (compact rows)
+- ✅ **Data Updates**:
+  - Added new farmer groups (Kampar district)
+  - Integrated "Pangkalan Baru Sejahtera"
+  - Standardized image fallbacks across the app
 
 ---
 

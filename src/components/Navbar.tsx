@@ -104,10 +104,10 @@ export default function Navbar() {
               <span className="font-semibold">{language.toUpperCase()}</span>
             </button>
 
-            <button className="flex items-center gap-2 px-4 xl:px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-200">
+            <Link href="/login" className="flex items-center gap-2 px-4 xl:px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-200">
               <LogIn className="w-4 h-4" />
               {t.nav.login}
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -198,10 +198,14 @@ export default function Navbar() {
               </div>
 
               {/* Login Button */}
-              <button className="w-full flex items-center justify-center gap-2 px-6 py-3.5 mt-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 mt-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all"
+              >
                 <LogIn className="w-5 h-5" />
                 {t.nav.login}
-              </button>
+              </Link>
             </div>
           </div>
         )}
