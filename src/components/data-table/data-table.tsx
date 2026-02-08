@@ -36,17 +36,24 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   searchKey?: string
+  enableGlobalFilter?: boolean
+  searchPlaceholder?: string
+  entityName?: string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   searchKey,
+  enableGlobalFilter,
+  searchPlaceholder,
+  entityName,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+  const [globalFilter, setGlobalFilter] = React.useState("")
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
@@ -56,6 +63,7 @@ export function DataTable<TData, TValue>({
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -65,6 +73,7 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+      globalFilter,
       columnVisibility,
       rowSelection,
     },
@@ -73,7 +82,19 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        {searchKey && (
+        {enableGlobalFilter ? (
+          <div className="flex items-center gap-4 flex-1">
+            <Input
+              placeholder={searchPlaceholder ?? "Search..."}
+              value={globalFilter ?? ""}
+              onChange={(event) => table.setGlobalFilter(event.target.value)}
+              className="max-w-sm"
+            />
+            <span className="text-sm text-muted-foreground">
+              Filtered key : {globalFilter || "-"} | {table.getFilteredRowModel().rows.length} of {table.getPreFilteredRowModel().rows.length} {entityName || "Rows"}
+            </span>
+          </div>
+        ) : searchKey && (
           <Input
             placeholder={`Filter ${searchKey}...`}
             value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}

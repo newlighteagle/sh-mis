@@ -1,19 +1,8 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil, Trash } from "lucide-react"
+import { ArrowUpDown, Eye } from "lucide-react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { FarmerGroupForm } from "./farmer-group-form"
-import { useState } from "react"
-import { deleteFarmerGroup } from "@/actions/farmer-group"
 
 type District = {
   uid: string
@@ -32,6 +21,22 @@ export type FarmerGroup = {
 }
 
 export const columns = (districts: District[]): ColumnDef<FarmerGroup>[] => [
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const fg = row.original
+
+      return (
+        <div className="flex items-center justify-start gap-0">
+          <Button variant="ghost" className="h-8 w-8 p-0" title="View" asChild>
+            <Link href={`/master-data/farmer-groups/${fg.uid}`}>
+                <Eye className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      )
+    },
+  },
   {
     accessorKey: "fgCode",
     header: ({ column }) => {
@@ -57,47 +62,5 @@ export const columns = (districts: District[]): ColumnDef<FarmerGroup>[] => [
   {
     accessorKey: "district.name",
     header: "District",
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const fg = row.original
-      const [showEditDialog, setShowEditDialog] = useState(false)
-
-      const handleDelete = async () => {
-         if (confirm(`Are you sure you want to delete ${fg.shortName}?`)) {
-            await deleteFarmerGroup(fg.uid)
-         }
-      }
-
-      return (
-        <>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => setShowEditDialog(true)}>
-              <Pencil className="mr-2 h-4 w-4" /> Edit
-            </DropdownMenuItem>
-             <DropdownMenuItem onClick={handleDelete} className="text-red-600">
-              <Trash className="mr-2 h-4 w-4" /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        
-        <FarmerGroupForm 
-            open={showEditDialog} 
-            onOpenChange={setShowEditDialog}
-            initialData={fg}
-            districts={districts}
-        />
-        </>
-      )
-    },
   },
 ]

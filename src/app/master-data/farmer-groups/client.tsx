@@ -16,5 +16,13 @@ interface FarmerGroupsClientProps {
 
 export function FarmerGroupsClient({ data, districts }: FarmerGroupsClientProps) {
   const tableColumns = columns(districts)
-  return <DataTable searchKey="fullName" columns={tableColumns} data={data} />
+  return (
+    <DataTable
+      columns={tableColumns}
+      data={data}
+      enableGlobalFilter={true}
+      searchPlaceholder="Search Short Name, Full Name, or District..."
+      entityName="Farmer Groups"
+    />
+  )
 }

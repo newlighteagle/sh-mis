@@ -25,6 +25,20 @@ export async function getFarmerGroups() {
   }
 }
 
+export async function getFarmerGroupById(uid: string) {
+  try {
+    const farmerGroup = await prisma.farmerGroup.findUnique({
+      where: { uid },
+      include: {
+        district: true
+      }
+    })
+    return { success: true, data: farmerGroup }
+  } catch (error) {
+    return { success: false, error: 'Failed to fetch farmer group' }
+  }
+}
+
 export async function createFarmerGroup(data: { 
   districtKode: string; 
   fgCode: string; 

@@ -295,6 +295,7 @@ export const menuData = {
   - **Dashboard**: Visual analytics (Basic KPI charts, thematic scorecards).
   - **Report**: Data tables with export functionality.
   - **Master Data**: CRUD interfaces for farmers, groups, and parcels.
+  - **Setting**: Configuration for Provinces, Districts, Groups, and Users.
   - **CMS**: Content management for the public landing page.
 
 ### Generic View Components
@@ -304,6 +305,13 @@ To facilitate rapid prototyping, the system uses generic view components that re
 2. **ReportView**: Standardized table layout with "Export to XLS/PDF" actions using `dummy-report.ts`.
 3. **MasterDataView**: Reusable CRUD table for master data entities (Farmers, Groups) using `dummy-master.ts`.
 4. **CmsView**: Dedicated interface for managing Landing Page content (Home, Community, Activity, Media) using `dummy-cms.ts`.
+
+### Enhanced Master Data Features
+- **Farmer Group Detail**: Dedicated page `/master-data/farmer-groups/[uid]` with:
+  - **Accordion Layout**: Organized sections for Overview, Map, Farmers List, Training, BMP, HSE, etc.
+  - **Score Cards**: Key metrics (Total Farmers, Land Size, Active, Pending) with trend indicators.
+  - **Farmers Table**: Client-side filtering, status tags (Registered/Reserved/inActive), and view actions.
+- **Global Search**: `DataTable` component supports global filtering across multiple columns (e.g., Short Name, Full Name, District) with real-time status updates (e.g., "Filtered key : xxxx | xxx of xxx Farmer Groups").
 
 ### Data Layer (Prototype)
 - **Location**: `src/lib/restrict-data/`

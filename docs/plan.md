@@ -78,8 +78,10 @@
         - [x] **Districts**: CRUD operations linked to Provinces.
         - [x] **Groups**: Management of organization groups.
         - [x] **Farmer Groups**: Data management linked to Districts (including `fgCode`, `shortName`).
+            - [x] **Detail Page**: Accordion layout (Map, Overview, List, Activities), Score Cards, Farmers Table with Status Tags.
+            - [x] **Search**: Global search (Short Name, Full Name, District) with status text.
         - [x] **Users**: User management with Role and Group assignment.
-    - [x] **Shared Components**: Reusable `DataTable` with sorting, filtering, and pagination.
+    - [x] **Shared Components**: Reusable `DataTable` with sorting, filtering, pagination, and global search.
     - [x] **Server Actions**: Secure, server-side data mutations.
 - [ ] Implement Land Mapping UI:
   - [ ] Map component with Leaflet.
