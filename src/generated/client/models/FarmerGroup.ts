@@ -191,6 +191,7 @@ export type FarmerGroupWhereInput = {
   shortName?: Prisma.StringFilter<"FarmerGroup"> | string
   fullName?: Prisma.StringFilter<"FarmerGroup"> | string
   district?: Prisma.XOR<Prisma.DistrictScalarRelationFilter, Prisma.DistrictWhereInput>
+  farmers?: Prisma.FarmerListRelationFilter
 }
 
 export type FarmerGroupOrderByWithRelationInput = {
@@ -201,6 +202,7 @@ export type FarmerGroupOrderByWithRelationInput = {
   shortName?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   district?: Prisma.DistrictOrderByWithRelationInput
+  farmers?: Prisma.FarmerOrderByRelationAggregateInput
 }
 
 export type FarmerGroupWhereUniqueInput = Prisma.AtLeast<{
@@ -214,6 +216,7 @@ export type FarmerGroupWhereUniqueInput = Prisma.AtLeast<{
   shortName?: Prisma.StringFilter<"FarmerGroup"> | string
   fullName?: Prisma.StringFilter<"FarmerGroup"> | string
   district?: Prisma.XOR<Prisma.DistrictScalarRelationFilter, Prisma.DistrictWhereInput>
+  farmers?: Prisma.FarmerListRelationFilter
 }, "uid" | "fgCode">
 
 export type FarmerGroupOrderByWithAggregationInput = {
@@ -247,6 +250,7 @@ export type FarmerGroupCreateInput = {
   shortName: string
   fullName: string
   district: Prisma.DistrictCreateNestedOneWithoutFarmerGroupsInput
+  farmers?: Prisma.FarmerCreateNestedManyWithoutFarmerGroupInput
 }
 
 export type FarmerGroupUncheckedCreateInput = {
@@ -256,6 +260,7 @@ export type FarmerGroupUncheckedCreateInput = {
   abrv: string
   shortName: string
   fullName: string
+  farmers?: Prisma.FarmerUncheckedCreateNestedManyWithoutFarmerGroupInput
 }
 
 export type FarmerGroupUpdateInput = {
@@ -265,6 +270,7 @@ export type FarmerGroupUpdateInput = {
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   district?: Prisma.DistrictUpdateOneRequiredWithoutFarmerGroupsNestedInput
+  farmers?: Prisma.FarmerUpdateManyWithoutFarmerGroupNestedInput
 }
 
 export type FarmerGroupUncheckedUpdateInput = {
@@ -274,6 +280,7 @@ export type FarmerGroupUncheckedUpdateInput = {
   abrv?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  farmers?: Prisma.FarmerUncheckedUpdateManyWithoutFarmerGroupNestedInput
 }
 
 export type FarmerGroupCreateManyInput = {
@@ -339,6 +346,11 @@ export type FarmerGroupMinOrderByAggregateInput = {
   fullName?: Prisma.SortOrder
 }
 
+export type FarmerGroupScalarRelationFilter = {
+  is?: Prisma.FarmerGroupWhereInput
+  isNot?: Prisma.FarmerGroupWhereInput
+}
+
 export type FarmerGroupCreateNestedManyWithoutDistrictInput = {
   create?: Prisma.XOR<Prisma.FarmerGroupCreateWithoutDistrictInput, Prisma.FarmerGroupUncheckedCreateWithoutDistrictInput> | Prisma.FarmerGroupCreateWithoutDistrictInput[] | Prisma.FarmerGroupUncheckedCreateWithoutDistrictInput[]
   connectOrCreate?: Prisma.FarmerGroupCreateOrConnectWithoutDistrictInput | Prisma.FarmerGroupCreateOrConnectWithoutDistrictInput[]
@@ -381,12 +393,27 @@ export type FarmerGroupUncheckedUpdateManyWithoutDistrictNestedInput = {
   deleteMany?: Prisma.FarmerGroupScalarWhereInput | Prisma.FarmerGroupScalarWhereInput[]
 }
 
+export type FarmerGroupCreateNestedOneWithoutFarmersInput = {
+  create?: Prisma.XOR<Prisma.FarmerGroupCreateWithoutFarmersInput, Prisma.FarmerGroupUncheckedCreateWithoutFarmersInput>
+  connectOrCreate?: Prisma.FarmerGroupCreateOrConnectWithoutFarmersInput
+  connect?: Prisma.FarmerGroupWhereUniqueInput
+}
+
+export type FarmerGroupUpdateOneRequiredWithoutFarmersNestedInput = {
+  create?: Prisma.XOR<Prisma.FarmerGroupCreateWithoutFarmersInput, Prisma.FarmerGroupUncheckedCreateWithoutFarmersInput>
+  connectOrCreate?: Prisma.FarmerGroupCreateOrConnectWithoutFarmersInput
+  upsert?: Prisma.FarmerGroupUpsertWithoutFarmersInput
+  connect?: Prisma.FarmerGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FarmerGroupUpdateToOneWithWhereWithoutFarmersInput, Prisma.FarmerGroupUpdateWithoutFarmersInput>, Prisma.FarmerGroupUncheckedUpdateWithoutFarmersInput>
+}
+
 export type FarmerGroupCreateWithoutDistrictInput = {
   uid?: string
   fgCode: string
   abrv: string
   shortName: string
   fullName: string
+  farmers?: Prisma.FarmerCreateNestedManyWithoutFarmerGroupInput
 }
 
 export type FarmerGroupUncheckedCreateWithoutDistrictInput = {
@@ -395,6 +422,7 @@ export type FarmerGroupUncheckedCreateWithoutDistrictInput = {
   abrv: string
   shortName: string
   fullName: string
+  farmers?: Prisma.FarmerUncheckedCreateNestedManyWithoutFarmerGroupInput
 }
 
 export type FarmerGroupCreateOrConnectWithoutDistrictInput = {
@@ -435,6 +463,58 @@ export type FarmerGroupScalarWhereInput = {
   fullName?: Prisma.StringFilter<"FarmerGroup"> | string
 }
 
+export type FarmerGroupCreateWithoutFarmersInput = {
+  uid?: string
+  fgCode: string
+  abrv: string
+  shortName: string
+  fullName: string
+  district: Prisma.DistrictCreateNestedOneWithoutFarmerGroupsInput
+}
+
+export type FarmerGroupUncheckedCreateWithoutFarmersInput = {
+  uid?: string
+  districtKode: string
+  fgCode: string
+  abrv: string
+  shortName: string
+  fullName: string
+}
+
+export type FarmerGroupCreateOrConnectWithoutFarmersInput = {
+  where: Prisma.FarmerGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.FarmerGroupCreateWithoutFarmersInput, Prisma.FarmerGroupUncheckedCreateWithoutFarmersInput>
+}
+
+export type FarmerGroupUpsertWithoutFarmersInput = {
+  update: Prisma.XOR<Prisma.FarmerGroupUpdateWithoutFarmersInput, Prisma.FarmerGroupUncheckedUpdateWithoutFarmersInput>
+  create: Prisma.XOR<Prisma.FarmerGroupCreateWithoutFarmersInput, Prisma.FarmerGroupUncheckedCreateWithoutFarmersInput>
+  where?: Prisma.FarmerGroupWhereInput
+}
+
+export type FarmerGroupUpdateToOneWithWhereWithoutFarmersInput = {
+  where?: Prisma.FarmerGroupWhereInput
+  data: Prisma.XOR<Prisma.FarmerGroupUpdateWithoutFarmersInput, Prisma.FarmerGroupUncheckedUpdateWithoutFarmersInput>
+}
+
+export type FarmerGroupUpdateWithoutFarmersInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  fgCode?: Prisma.StringFieldUpdateOperationsInput | string
+  abrv?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.DistrictUpdateOneRequiredWithoutFarmerGroupsNestedInput
+}
+
+export type FarmerGroupUncheckedUpdateWithoutFarmersInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  districtKode?: Prisma.StringFieldUpdateOperationsInput | string
+  fgCode?: Prisma.StringFieldUpdateOperationsInput | string
+  abrv?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 export type FarmerGroupCreateManyDistrictInput = {
   uid?: string
   fgCode: string
@@ -449,6 +529,7 @@ export type FarmerGroupUpdateWithoutDistrictInput = {
   abrv?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  farmers?: Prisma.FarmerUpdateManyWithoutFarmerGroupNestedInput
 }
 
 export type FarmerGroupUncheckedUpdateWithoutDistrictInput = {
@@ -457,6 +538,7 @@ export type FarmerGroupUncheckedUpdateWithoutDistrictInput = {
   abrv?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  farmers?: Prisma.FarmerUncheckedUpdateManyWithoutFarmerGroupNestedInput
 }
 
 export type FarmerGroupUncheckedUpdateManyWithoutDistrictInput = {
@@ -468,6 +550,35 @@ export type FarmerGroupUncheckedUpdateManyWithoutDistrictInput = {
 }
 
 
+/**
+ * Count Type FarmerGroupCountOutputType
+ */
+
+export type FarmerGroupCountOutputType = {
+  farmers: number
+}
+
+export type FarmerGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  farmers?: boolean | FarmerGroupCountOutputTypeCountFarmersArgs
+}
+
+/**
+ * FarmerGroupCountOutputType without action
+ */
+export type FarmerGroupCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FarmerGroupCountOutputType
+   */
+  select?: Prisma.FarmerGroupCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * FarmerGroupCountOutputType without action
+ */
+export type FarmerGroupCountOutputTypeCountFarmersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FarmerWhereInput
+}
+
 
 export type FarmerGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   uid?: boolean
@@ -477,6 +588,8 @@ export type FarmerGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   shortName?: boolean
   fullName?: boolean
   district?: boolean | Prisma.DistrictDefaultArgs<ExtArgs>
+  farmers?: boolean | Prisma.FarmerGroup$farmersArgs<ExtArgs>
+  _count?: boolean | Prisma.FarmerGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["farmerGroup"]>
 
 export type FarmerGroupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -511,6 +624,8 @@ export type FarmerGroupSelectScalar = {
 export type FarmerGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "districtKode" | "fgCode" | "abrv" | "shortName" | "fullName", ExtArgs["result"]["farmerGroup"]>
 export type FarmerGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   district?: boolean | Prisma.DistrictDefaultArgs<ExtArgs>
+  farmers?: boolean | Prisma.FarmerGroup$farmersArgs<ExtArgs>
+  _count?: boolean | Prisma.FarmerGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FarmerGroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   district?: boolean | Prisma.DistrictDefaultArgs<ExtArgs>
@@ -523,6 +638,7 @@ export type $FarmerGroupPayload<ExtArgs extends runtime.Types.Extensions.Interna
   name: "FarmerGroup"
   objects: {
     district: Prisma.$DistrictPayload<ExtArgs>
+    farmers: Prisma.$FarmerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     uid: string
@@ -926,6 +1042,7 @@ readonly fields: FarmerGroupFieldRefs;
 export interface Prisma__FarmerGroupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   district<T extends Prisma.DistrictDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DistrictDefaultArgs<ExtArgs>>): Prisma.Prisma__DistrictClient<runtime.Types.Result.GetResult<Prisma.$DistrictPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  farmers<T extends Prisma.FarmerGroup$farmersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FarmerGroup$farmersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1354,6 +1471,30 @@ export type FarmerGroupDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many FarmerGroups to delete.
    */
   limit?: number
+}
+
+/**
+ * FarmerGroup.farmers
+ */
+export type FarmerGroup$farmersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Farmer
+   */
+  select?: Prisma.FarmerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Farmer
+   */
+  omit?: Prisma.FarmerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FarmerInclude<ExtArgs> | null
+  where?: Prisma.FarmerWhereInput
+  orderBy?: Prisma.FarmerOrderByWithRelationInput | Prisma.FarmerOrderByWithRelationInput[]
+  cursor?: Prisma.FarmerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FarmerScalarFieldEnum | Prisma.FarmerScalarFieldEnum[]
 }
 
 /**

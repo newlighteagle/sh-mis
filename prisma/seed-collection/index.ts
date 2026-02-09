@@ -1,5 +1,6 @@
 import { PrismaClient } from '../../src/generated/client/client'
 import { seedFarmerGroups } from './seed-tbl-farmer-group'
+import { seedFarmers } from './seed-tbl-farmer'
 import { seedProvinces } from './seed-tbl-province'
 import { seedDistricts } from './seed-tbl-district'
 import { seedUsers } from './seed-tbl-user'
@@ -25,6 +26,7 @@ async function main() {
   await seedProvinces(prisma)
   await seedDistricts(prisma)
   await seedFarmerGroups(prisma)
+  await seedFarmers(prisma)
   await seedUsers(prisma)
 
   console.log('Seeding finished.')

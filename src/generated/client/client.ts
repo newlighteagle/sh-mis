@@ -69,3 +69,13 @@ export type District = Prisma.DistrictModel
  * 
  */
 export type FarmerGroup = Prisma.FarmerGroupModel
+/**
+ * Model Farmer
+ * 
+ */
+export type Farmer = Prisma.FarmerModel
+/**
+ * Model LandParcel
+ * 
+ */
+export type LandParcel = Prisma.LandParcelModel

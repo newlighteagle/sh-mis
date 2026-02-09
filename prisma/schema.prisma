@@ -3,14 +3,14 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/client"
+  provider   = "prisma-client"
+  output     = "../src/generated/client"
   engineType = "library"
 }
 
 model Role {
-  id          String   @id @default(uuid())
-  name        String   @unique // Admin, Management, Operator, User
+  id          String  @id @default(uuid())
+  name        String  @unique // Admin, Management, Operator, User
   description String?
   users       User[]
 
@@ -21,7 +21,7 @@ model User {
   id        String   @id @default(uuid())
   email     String   @unique
   name      String?
-  password  String?  // Nullable for now
+  password  String? // Nullable for now
   roleId    String
   role      Role     @relation(fields: [roleId], references: [id])
   groupId   String?
@@ -33,19 +33,19 @@ model User {
 }
 
 model Group {
-  uid       String   @id @default(uuid())
-  abrv      String   @unique
+  uid       String  @id @default(uuid())
+  abrv      String  @unique
   name      String
-  is_active Boolean  @default(true) // defaults to true as is common for is_active
+  is_active Boolean @default(true) // defaults to true as is common for is_active
   users     User[]
 
   @@map("tbl-group")
 }
 
 model Province {
-  uid   String @id @default(uuid())
-  kode  String @unique
-  name  String
+  uid  String @id @default(uuid())
+  kode String @unique
+  name String
 
   districts District[]
 
@@ -53,11 +53,11 @@ model Province {
 }
 
 model District {
-  uid        String   @id @default(uuid())
-  kode       String   @unique
-  name       String
-  provinceId String
-  province   Province @relation(fields: [provinceId], references: [uid])
+  uid          String        @id @default(uuid())
+  kode         String        @unique
+  name         String
+  provinceId   String
+  province     Province      @relation(fields: [provinceId], references: [uid])
   farmerGroups FarmerGroup[]
 
   @@map("tbl-district")
@@ -71,6 +71,33 @@ model FarmerGroup {
   abrv         String
   shortName    String   @map("short_name")
   fullName     String   @map("full_name")
+  farmers      Farmer[]
 
   @@map("tbl-farmer-group")
+}
+
+model Farmer {
+  uid             String       @id @default(uuid())
+  fgId            String       @map("fg_id")
+  farmerGroup     FarmerGroup  @relation(fields: [fgId], references: [uid])
+  name            String
+  displayFarmerID String       @map("display_farmer_id")
+  status          String // Registered, Reserved, InActive
+  certificate     String?      // Multiple certificates separated by comma
+  landParcels     LandParcel[]
+
+  @@map("tbl-farmer")
+}
+
+model LandParcel {
+  uid                 String                 @id @default(uuid())
+  fid                 String
+  farmer              Farmer                 @relation(fields: [fid], references: [uid])
+  fgName              String                 @map("fg_name")
+  displayLandParcelID String                 @map("display_land_parcel_id")
+  revision            Int
+  polygon             Unsupported("polygon")
+  sizeHa              Float                  @map("size_ha")
+
+  @@map("tbl-land-parcel")
 }

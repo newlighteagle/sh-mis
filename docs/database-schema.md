@@ -50,8 +50,31 @@
 - `password`: String
 - `roleId`: String (FK -> Role.uid)
 - `role`: Relation to Role
-- `groupId`: String? (FK -> Group.uid) - Optional
 - `group`: Relation to Group?
+
+### Farmer (`tbl-farmer`)
+
+- `id`: Int (Autoincrement, PK)
+- `uid`: String (UUID, Unique)
+- `fgId`: String (FK -> FarmerGroup.uid)
+- `displayFarmerID`: String (Unique)
+- `name`: String
+- `status`: String (Registered, Reserved, inActive)
+- `certificate`: String? (Comma-separated or Single Value)
+- `farmerGroup`: Relation to FarmerGroup
+- `landParcels`: Relation to LandParcel[]
+
+### Land Parcel (`tbl-land-parcel`)
+
+- `id`: Int (Autoincrement, PK)
+- `uid`: String (UUID, Unique)
+- `fid`: String (FK -> Farmer.uid)
+- `displayLandParcelID`: String
+- `fg_name`: String
+- `polygon`: Unsupported (Geometry)
+- `size_ha`: Float
+- `revision`: Int
+- `farmer`: Relation to Farmer
 
 ## Entity Relationship Diagram
 
@@ -61,6 +84,8 @@ erDiagram
     DISTRICT ||--o{ FARMER_GROUP : contains
     ROLE ||--o{ USER : assigned_to
     GROUP ||--o{ USER : belongs_to
+    FARMER_GROUP ||--o{ FARMER : has_members
+    FARMER ||--o{ LAND_PARCEL : owns
 
     PROVINCE {
         string uid PK
@@ -100,6 +125,23 @@ erDiagram
         string email
         string name
         string roleId FK
+        string roleId FK
         string groupId FK
+    }
+
+    FARMER {
+        string uid PK
+        string displayFarmerID
+        string name
+        string status
+        string certificate
+        string fgId FK
+    }
+
+    LAND_PARCEL {
+        string uid PK
+        string displayLandParcelID
+        float size_ha
+        string fid FK
     }
 ```

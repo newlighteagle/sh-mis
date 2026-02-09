@@ -310,7 +310,7 @@ To facilitate rapid prototyping, the system uses generic view components that re
 - **Farmer Group Detail**: Dedicated page `/master-data/farmer-groups/[uid]` with:
   - **Accordion Layout**: Organized sections for Overview, Map, Farmers List, Training, BMP, HSE, etc.
   - **Score Cards**: Key metrics (Total Farmers, Land Size, Active, Pending) with trend indicators.
-  - **Farmers Table**: Client-side filtering, status tags (Registered/Reserved/inActive), and view actions.
+  - **Farmers Table**: Client-side filtering, status tags (Registered/Reserved/inActive), **Certificate Management**, and view actions.
 - **Global Search**: `DataTable` component supports global filtering across multiple columns (e.g., Short Name, Full Name, District) with real-time status updates (e.g., "Filtered key : xxxx | xxx of xxx Farmer Groups").
 
 ### Data Layer (Prototype)
@@ -666,8 +666,25 @@ module.exports = {
 - `uid`: UUID
 - `email`: String (Unique)
 - `name`: String
-- `roleId`: UUID (FK)
 - `groupId`: UUID (FK, Optional)
+
+#### tbl-farmer
+
+- `id`: Int (PK)
+- `uid`: UUID
+- `fgId`: UUID (FK)
+- `displayFarmerID`: String (Unique)
+- `name`: String
+- `status`: String
+- `certificate`: String? (Comma-separated or Single Value)
+
+#### tbl-land-parcel
+
+- `id`: Int (PK)
+- `uid`: UUID
+- `fid`: UUID (FK)
+- `displayLandParcelID`: String
+- `size_ha`: Float
 
 ## Entity Relationship Diagram
 
@@ -677,6 +694,8 @@ erDiagram
     DISTRICT ||--o{ FARMER_GROUP : contains
     ROLE ||--o{ USER : assigned_to
     GROUP ||--o{ USER : belongs_to
+    FARMER_GROUP ||--o{ FARMER : has_members
+    FARMER ||--o{ LAND_PARCEL : owns
 ```
 
 ---

@@ -389,7 +389,9 @@ export const ModelName = {
   Group: 'Group',
   Province: 'Province',
   District: 'District',
-  FarmerGroup: 'FarmerGroup'
+  FarmerGroup: 'FarmerGroup',
+  Farmer: 'Farmer',
+  LandParcel: 'LandParcel'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "role" | "user" | "group" | "province" | "district" | "farmerGroup"
+    modelProps: "role" | "user" | "group" | "province" | "district" | "farmerGroup" | "farmer" | "landParcel"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +855,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Farmer: {
+      payload: Prisma.$FarmerPayload<ExtArgs>
+      fields: Prisma.FarmerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FarmerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FarmerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>
+        }
+        findFirst: {
+          args: Prisma.FarmerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FarmerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>
+        }
+        findMany: {
+          args: Prisma.FarmerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>[]
+        }
+        create: {
+          args: Prisma.FarmerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>
+        }
+        createMany: {
+          args: Prisma.FarmerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FarmerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>[]
+        }
+        delete: {
+          args: Prisma.FarmerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>
+        }
+        update: {
+          args: Prisma.FarmerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>
+        }
+        deleteMany: {
+          args: Prisma.FarmerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FarmerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FarmerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>[]
+        }
+        upsert: {
+          args: Prisma.FarmerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmerPayload>
+        }
+        aggregate: {
+          args: Prisma.FarmerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFarmer>
+        }
+        groupBy: {
+          args: Prisma.FarmerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FarmerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FarmerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FarmerCountAggregateOutputType> | number
+        }
+      }
+    }
+    LandParcel: {
+      payload: Prisma.$LandParcelPayload<ExtArgs>
+      fields: Prisma.LandParcelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LandParcelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LandParcelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload>
+        }
+        findFirst: {
+          args: Prisma.LandParcelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LandParcelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload>
+        }
+        findMany: {
+          args: Prisma.LandParcelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload>[]
+        }
+        delete: {
+          args: Prisma.LandParcelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload>
+        }
+        update: {
+          args: Prisma.LandParcelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload>
+        }
+        deleteMany: {
+          args: Prisma.LandParcelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LandParcelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LandParcelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandParcelPayload>[]
+        }
+        aggregate: {
+          args: Prisma.LandParcelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLandParcel>
+        }
+        groupBy: {
+          args: Prisma.LandParcelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandParcelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LandParcelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandParcelCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -956,6 +1090,30 @@ export const FarmerGroupScalarFieldEnum = {
 export type FarmerGroupScalarFieldEnum = (typeof FarmerGroupScalarFieldEnum)[keyof typeof FarmerGroupScalarFieldEnum]
 
 
+export const FarmerScalarFieldEnum = {
+  uid: 'uid',
+  fgId: 'fgId',
+  name: 'name',
+  displayFarmerID: 'displayFarmerID',
+  status: 'status',
+  certificate: 'certificate'
+} as const
+
+export type FarmerScalarFieldEnum = (typeof FarmerScalarFieldEnum)[keyof typeof FarmerScalarFieldEnum]
+
+
+export const LandParcelScalarFieldEnum = {
+  uid: 'uid',
+  fid: 'fid',
+  fgName: 'fgName',
+  displayLandParcelID: 'displayLandParcelID',
+  revision: 'revision',
+  sizeHa: 'sizeHa'
+} as const
+
+export type LandParcelScalarFieldEnum = (typeof LandParcelScalarFieldEnum)[keyof typeof LandParcelScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1032,6 +1190,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1135,6 +1307,8 @@ export type GlobalOmitConfig = {
   province?: Prisma.ProvinceOmit
   district?: Prisma.DistrictOmit
   farmerGroup?: Prisma.FarmerGroupOmit
+  farmer?: Prisma.FarmerOmit
+  landParcel?: Prisma.LandParcelOmit
 }
 
 /* Types for Logging */

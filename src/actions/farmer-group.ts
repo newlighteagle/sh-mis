@@ -30,7 +30,13 @@ export async function getFarmerGroupById(uid: string) {
     const farmerGroup = await prisma.farmerGroup.findUnique({
       where: { uid },
       include: {
-        district: true
+        district: true,
+        farmers: {
+          include: {
+            landParcels: true
+          },
+          orderBy: { name: 'asc' }
+        }
       }
     })
     return { success: true, data: farmerGroup }

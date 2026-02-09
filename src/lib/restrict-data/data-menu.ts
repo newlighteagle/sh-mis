@@ -26,6 +26,7 @@ import {
   Tractor,
   Truck,
   User,
+  UserCheck,
   Users,
 } from "lucide-react"
 
@@ -85,6 +86,7 @@ export const menuData = {
       icon: SquareTerminal,
       items: [
         { title: "Farmer Groups", url: "/master-data/farmer-groups", icon: Tractor },
+        { title: "Farmers", url: "/master-data/farmers", icon: UserCheck },
       ],
     },
 

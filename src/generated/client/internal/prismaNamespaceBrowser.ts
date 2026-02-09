@@ -56,7 +56,9 @@ export const ModelName = {
   Group: 'Group',
   Province: 'Province',
   District: 'District',
-  FarmerGroup: 'FarmerGroup'
+  FarmerGroup: 'FarmerGroup',
+  Farmer: 'Farmer',
+  LandParcel: 'LandParcel'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -137,6 +139,30 @@ export const FarmerGroupScalarFieldEnum = {
 } as const
 
 export type FarmerGroupScalarFieldEnum = (typeof FarmerGroupScalarFieldEnum)[keyof typeof FarmerGroupScalarFieldEnum]
+
+
+export const FarmerScalarFieldEnum = {
+  uid: 'uid',
+  fgId: 'fgId',
+  name: 'name',
+  displayFarmerID: 'displayFarmerID',
+  status: 'status',
+  certificate: 'certificate'
+} as const
+
+export type FarmerScalarFieldEnum = (typeof FarmerScalarFieldEnum)[keyof typeof FarmerScalarFieldEnum]
+
+
+export const LandParcelScalarFieldEnum = {
+  uid: 'uid',
+  fid: 'fid',
+  fgName: 'fgName',
+  displayLandParcelID: 'displayLandParcelID',
+  revision: 'revision',
+  sizeHa: 'sizeHa'
+} as const
+
+export type LandParcelScalarFieldEnum = (typeof LandParcelScalarFieldEnum)[keyof typeof LandParcelScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -21,6 +21,14 @@ export default async function FarmerGroupDetailPage({ params }: { params: Promis
     notFound()
   }
 
+  const farmers = farmerGroup.farmers || []
+  const totalFarmers = farmers.length
+  const totalLandSize = farmers.reduce((acc, farmer) => {
+    return acc + farmer.landParcels.reduce((lpAcc, lp) => lpAcc + lp.sizeHa, 0)
+  }, 0).toFixed(2)
+  const activeFarmers = farmers.filter(f => f.status === 'Registered').length
+  const pendingFarmers = farmers.filter(f => f.status === 'Reserved').length // Assuming Reserved = Pending
+
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <div className="flex items-center gap-4">
@@ -45,8 +53,8 @@ export default async function FarmerGroupDetailPage({ params }: { params: Promis
                             <Users className="h-10 w-10 text-blue-500 mr-4" />
                             <div>
                                 <p className="text-sm font-medium text-muted-foreground">Total Farmers</p>
-                                <h3 className="text-2xl font-bold">254</h3>
-                                <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                                <h3 className="text-2xl font-bold">{totalFarmers}</h3>
+                                {/* <p className="text-xs text-muted-foreground">+20.1% from last month</p> */}
                             </div>
                         </CardContent>
                     </Card>
@@ -55,8 +63,8 @@ export default async function FarmerGroupDetailPage({ params }: { params: Promis
                             <Map className="h-10 w-10 text-green-500 mr-4" />
                             <div>
                                 <p className="text-sm font-medium text-muted-foreground">Total Land Size</p>
-                                <h3 className="text-2xl font-bold">1,234 Ha</h3>
-                                <p className="text-xs text-muted-foreground">+180.1% from last month</p>
+                                <h3 className="text-2xl font-bold">{totalLandSize} Ha</h3>
+                                {/* <p className="text-xs text-muted-foreground">+180.1% from last month</p> */}
                             </div>
                         </CardContent>
                     </Card>
@@ -64,9 +72,9 @@ export default async function FarmerGroupDetailPage({ params }: { params: Promis
                          <CardContent className="flex items-center p-6">
                             <UserCheck className="h-10 w-10 text-emerald-600 mr-4" />
                             <div>
-                                <p className="text-sm font-medium text-muted-foreground">Active Farmers</p>
-                                <h3 className="text-2xl font-bold">200</h3>
-                                <p className="text-xs text-muted-foreground">+19% from last month</p>
+                                <p className="text-sm font-medium text-muted-foreground">Registered Farmers</p>
+                                <h3 className="text-2xl font-bold">{activeFarmers}</h3>
+                                {/* <p className="text-xs text-muted-foreground">+19% from last month</p> */}
                             </div>
                         </CardContent>
                     </Card>
@@ -75,8 +83,8 @@ export default async function FarmerGroupDetailPage({ params }: { params: Promis
                             <Clock className="h-10 w-10 text-orange-500 mr-4" />
                             <div>
                                 <p className="text-sm font-medium text-muted-foreground">Pending</p>
-                                <h3 className="text-2xl font-bold">54</h3>
-                                <p className="text-xs text-muted-foreground">+201 since last hour</p>
+                                <h3 className="text-2xl font-bold">{pendingFarmers}</h3>
+                                {/* <p className="text-xs text-muted-foreground">+201 since last hour</p> */}
                             </div>
                         </CardContent>
                     </Card>
@@ -94,7 +102,7 @@ export default async function FarmerGroupDetailPage({ params }: { params: Promis
         <AccordionItem value="farmers-list">
             <AccordionTrigger>Farmers List</AccordionTrigger>
             <AccordionContent>
-                <FarmersTable />
+                <FarmersTable data={farmerGroup.farmers || []} />
             </AccordionContent>
         </AccordionItem>
 

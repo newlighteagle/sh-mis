@@ -1,19 +1,19 @@
 "use client"
 
 import { DataTable } from "@/components/data-table/data-table"
-import { columns, Farmer } from "./farmers-columns"
+import { columns, Farmer } from "./columns"
 
-interface FarmersTableProps {
+interface FarmersClientProps {
   data: Farmer[]
 }
 
-export function FarmersTable({ data }: FarmersTableProps) {
+export function FarmersClient({ data }: FarmersClientProps) {
   return (
     <DataTable
       columns={columns}
       data={data}
       enableGlobalFilter={true}
-      searchPlaceholder="Search FarmerID or Name..."
+      searchPlaceholder="Search Farmer ID, Name..."
       entityName="Farmers"
     />
   )

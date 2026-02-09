@@ -13,6 +13,7 @@ A Management Information System (MIS) for WRI Indonesia to empower smallholder p
 - **Public Dashboard**: Interactive geospatial map of farmer groups and mills.
 - **Restricted Dashboard**: Secure area for KPI monitoring, Reports, Master Data, and CMS.
 - **Farmer Profiles**: Detailed profiles for 31+ farmer groups.
+- **Certificate Tracking**: Manage and display farmer certifications (RSPO, ISPO, etc).
 - **Bilingual**: Full support for English and Indonesian.
 - **Responsive**: Optimized for Mobile, Tablet, and Desktop.
 
