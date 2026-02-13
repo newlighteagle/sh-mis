@@ -25,3 +25,18 @@ export async function getFarmers() {
     return { success: false, error: 'Failed to fetch farmers' }
   }
 }
+
+export async function getFarmerByUid(uid: string) {
+  try {
+    const farmer = await prisma.farmer.findUnique({
+      where: { uid },
+      include: {
+        farmerGroup: true,
+        landParcels: true
+      }
+    })
+    return { success: true, data: farmer }
+  } catch (error) {
+    return { success: false, error: 'Failed to fetch farmer' }
+  }
+}

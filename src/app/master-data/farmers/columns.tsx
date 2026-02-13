@@ -39,12 +39,13 @@ export const columns: ColumnDef<Farmer>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      // Placeholder for view action, maybe link to detail page later if needed
       return (
          <div className="flex items-center justify-start gap-0">
-          <Button variant="ghost" className="h-8 w-8 p-0" title="View">
-             <Eye className="h-4 w-4" />
-          </Button>
+          <Link href={`/master-data/farmers/${row.original.uid}`}>
+            <Button variant="ghost" className="h-8 w-8 p-0" title="View">
+               <Eye className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       )
     },

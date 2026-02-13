@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Eye } from "lucide-react"
 
+import Link from "next/link"
+
 export type Farmer = {
   uid: string
   name: string
@@ -35,9 +37,11 @@ export const columns: ColumnDef<Farmer>[] = [
     cell: ({ row }) => {
       // Placeholder for view action
       return (
-        <Button variant="ghost" size="icon" className="h-8 w-8">
-          <Eye className="h-4 w-4" />
-        </Button>
+        <Link href={`/master-data/farmers/${row.original.uid}`}>
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Eye className="h-4 w-4" />
+            </Button>
+        </Link>
       )
     },
   },

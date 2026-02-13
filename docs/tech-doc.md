@@ -311,6 +311,7 @@ To facilitate rapid prototyping, the system uses generic view components that re
   - **Accordion Layout**: Organized sections for Overview, Map, Farmers List, Training, BMP, HSE, etc.
   - **Score Cards**: Key metrics (Total Farmers, Land Size, Active, Pending) with trend indicators.
   - **Farmers Table**: Client-side filtering, status tags (Registered/Reserved/inActive), **Certificate Management**, and view actions.
+- **Farmer Detail Page**: Dedicated page `/master-data/farmers/[uid]` displaying farmer profile, certificate status, and associated land parcels.
 - **Global Search**: `DataTable` component supports global filtering across multiple columns (e.g., Short Name, Full Name, District) with real-time status updates (e.g., "Filtered key : xxxx | xxx of xxx Farmer Groups").
 
 ### Data Layer (Prototype)
