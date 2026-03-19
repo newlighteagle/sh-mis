@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { FarmersTable } from "./farmers-table"
+import MapSection from "./map-section"
 
 // @ts-ignore
 export default async function FarmerGroupDetailPage({ params }: { params: Promise<{ uid: string }> }) {
@@ -95,7 +96,12 @@ export default async function FarmerGroupDetailPage({ params }: { params: Promis
         <AccordionItem value="map">
             <AccordionTrigger>Map</AccordionTrigger>
             <AccordionContent>
-                <div className="p-4 text-muted-foreground">Map will be displayed here</div>
+                <MapSection landParcels={farmerGroup.farmers?.flatMap(f => f.landParcels.map(lp => ({
+                    ...lp,
+                    farmerName: f.name,
+                    farmerStatus: f.status,
+                    displayFarmerID: f.displayFarmerID
+                }))) || []} />
             </AccordionContent>
         </AccordionItem>
 

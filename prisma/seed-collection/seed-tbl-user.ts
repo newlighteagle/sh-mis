@@ -1,5 +1,6 @@
 import { PrismaClient } from '../../src/generated/client/client'
 import { ROLES } from './seed-tbl-role'
+import { v4 as uuidv4 } from 'uuid'
 
 const USERS_DATA = [
   { groupAbrv: 'WRI', name: 'Sofyan Salim', email: 'sofyan.salim@wri.org', pass: 'pass123', role: 'Admin' },
@@ -45,14 +46,15 @@ export async function seedUsers(prisma: PrismaClient) {
       update: {
         name: userData.name,
         password: userData.pass,
-        roleId: role.id,
+        roleId: role.uid,
         groupId: group.uid
       },
       create: {
+        uid: uuidv4(),
         email: userData.email,
         name: userData.name,
         password: userData.pass,
-        roleId: role.id,
+        roleId: role.uid,
         groupId: group.uid
       },
     })

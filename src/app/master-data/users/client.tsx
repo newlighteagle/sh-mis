@@ -4,7 +4,7 @@ import { DataTable } from "@/components/data-table/data-table"
 import { columns, User } from "./columns"
 
 type Role = {
-  id: string
+  uid: string
   name: string
 }
 

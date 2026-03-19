@@ -1,6 +1,6 @@
 'use server'
-
 import { PrismaClient } from "@/generated/client/client"
+import { v4 as uuidv4 } from 'uuid'
 import { revalidatePath } from "next/cache"
 import { PrismaPg } from "@prisma/adapter-pg"
 import { Pool } from "pg"
@@ -36,6 +36,7 @@ export async function createUser(data: {
   try {
     await prisma.user.create({
       data: {
+        uid: uuidv4(),
         email: data.email,
         name: data.name,
         password: data.password,
@@ -59,7 +60,7 @@ export async function updateUser(uid: string, data: {
 }) {
   try {
     await prisma.user.update({
-      where: { id: uid },
+      where: { uid },
       data: {
         email: data.email,
         name: data.name,
@@ -78,7 +79,7 @@ export async function updateUser(uid: string, data: {
 export async function deleteUser(uid: string) {
   try {
     await prisma.user.delete({
-      where: { id: uid }
+      where: { uid }
     })
     revalidatePath('/master-data/users')
     return { success: true }

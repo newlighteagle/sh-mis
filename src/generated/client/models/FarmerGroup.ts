@@ -190,8 +190,9 @@ export type FarmerGroupWhereInput = {
   abrv?: Prisma.StringFilter<"FarmerGroup"> | string
   shortName?: Prisma.StringFilter<"FarmerGroup"> | string
   fullName?: Prisma.StringFilter<"FarmerGroup"> | string
-  district?: Prisma.XOR<Prisma.DistrictScalarRelationFilter, Prisma.DistrictWhereInput>
   farmers?: Prisma.FarmerListRelationFilter
+  district?: Prisma.XOR<Prisma.DistrictScalarRelationFilter, Prisma.DistrictWhereInput>
+  tbl_training_activity?: Prisma.Tbl_training_activityListRelationFilter
 }
 
 export type FarmerGroupOrderByWithRelationInput = {
@@ -201,8 +202,9 @@ export type FarmerGroupOrderByWithRelationInput = {
   abrv?: Prisma.SortOrder
   shortName?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
-  district?: Prisma.DistrictOrderByWithRelationInput
   farmers?: Prisma.FarmerOrderByRelationAggregateInput
+  district?: Prisma.DistrictOrderByWithRelationInput
+  tbl_training_activity?: Prisma.tbl_training_activityOrderByRelationAggregateInput
 }
 
 export type FarmerGroupWhereUniqueInput = Prisma.AtLeast<{
@@ -215,8 +217,9 @@ export type FarmerGroupWhereUniqueInput = Prisma.AtLeast<{
   abrv?: Prisma.StringFilter<"FarmerGroup"> | string
   shortName?: Prisma.StringFilter<"FarmerGroup"> | string
   fullName?: Prisma.StringFilter<"FarmerGroup"> | string
-  district?: Prisma.XOR<Prisma.DistrictScalarRelationFilter, Prisma.DistrictWhereInput>
   farmers?: Prisma.FarmerListRelationFilter
+  district?: Prisma.XOR<Prisma.DistrictScalarRelationFilter, Prisma.DistrictWhereInput>
+  tbl_training_activity?: Prisma.Tbl_training_activityListRelationFilter
 }, "uid" | "fgCode">
 
 export type FarmerGroupOrderByWithAggregationInput = {
@@ -249,8 +252,9 @@ export type FarmerGroupCreateInput = {
   abrv: string
   shortName: string
   fullName: string
-  district: Prisma.DistrictCreateNestedOneWithoutFarmerGroupsInput
   farmers?: Prisma.FarmerCreateNestedManyWithoutFarmerGroupInput
+  district: Prisma.DistrictCreateNestedOneWithoutFarmerGroupsInput
+  tbl_training_activity?: Prisma.tbl_training_activityCreateNestedManyWithoutTbl_farmer_groupInput
 }
 
 export type FarmerGroupUncheckedCreateInput = {
@@ -261,6 +265,7 @@ export type FarmerGroupUncheckedCreateInput = {
   shortName: string
   fullName: string
   farmers?: Prisma.FarmerUncheckedCreateNestedManyWithoutFarmerGroupInput
+  tbl_training_activity?: Prisma.tbl_training_activityUncheckedCreateNestedManyWithoutTbl_farmer_groupInput
 }
 
 export type FarmerGroupUpdateInput = {
@@ -269,8 +274,9 @@ export type FarmerGroupUpdateInput = {
   abrv?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
-  district?: Prisma.DistrictUpdateOneRequiredWithoutFarmerGroupsNestedInput
   farmers?: Prisma.FarmerUpdateManyWithoutFarmerGroupNestedInput
+  district?: Prisma.DistrictUpdateOneRequiredWithoutFarmerGroupsNestedInput
+  tbl_training_activity?: Prisma.tbl_training_activityUpdateManyWithoutTbl_farmer_groupNestedInput
 }
 
 export type FarmerGroupUncheckedUpdateInput = {
@@ -281,6 +287,7 @@ export type FarmerGroupUncheckedUpdateInput = {
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   farmers?: Prisma.FarmerUncheckedUpdateManyWithoutFarmerGroupNestedInput
+  tbl_training_activity?: Prisma.tbl_training_activityUncheckedUpdateManyWithoutTbl_farmer_groupNestedInput
 }
 
 export type FarmerGroupCreateManyInput = {
@@ -407,6 +414,20 @@ export type FarmerGroupUpdateOneRequiredWithoutFarmersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FarmerGroupUpdateToOneWithWhereWithoutFarmersInput, Prisma.FarmerGroupUpdateWithoutFarmersInput>, Prisma.FarmerGroupUncheckedUpdateWithoutFarmersInput>
 }
 
+export type FarmerGroupCreateNestedOneWithoutTbl_training_activityInput = {
+  create?: Prisma.XOR<Prisma.FarmerGroupCreateWithoutTbl_training_activityInput, Prisma.FarmerGroupUncheckedCreateWithoutTbl_training_activityInput>
+  connectOrCreate?: Prisma.FarmerGroupCreateOrConnectWithoutTbl_training_activityInput
+  connect?: Prisma.FarmerGroupWhereUniqueInput
+}
+
+export type FarmerGroupUpdateOneRequiredWithoutTbl_training_activityNestedInput = {
+  create?: Prisma.XOR<Prisma.FarmerGroupCreateWithoutTbl_training_activityInput, Prisma.FarmerGroupUncheckedCreateWithoutTbl_training_activityInput>
+  connectOrCreate?: Prisma.FarmerGroupCreateOrConnectWithoutTbl_training_activityInput
+  upsert?: Prisma.FarmerGroupUpsertWithoutTbl_training_activityInput
+  connect?: Prisma.FarmerGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FarmerGroupUpdateToOneWithWhereWithoutTbl_training_activityInput, Prisma.FarmerGroupUpdateWithoutTbl_training_activityInput>, Prisma.FarmerGroupUncheckedUpdateWithoutTbl_training_activityInput>
+}
+
 export type FarmerGroupCreateWithoutDistrictInput = {
   uid?: string
   fgCode: string
@@ -414,6 +435,7 @@ export type FarmerGroupCreateWithoutDistrictInput = {
   shortName: string
   fullName: string
   farmers?: Prisma.FarmerCreateNestedManyWithoutFarmerGroupInput
+  tbl_training_activity?: Prisma.tbl_training_activityCreateNestedManyWithoutTbl_farmer_groupInput
 }
 
 export type FarmerGroupUncheckedCreateWithoutDistrictInput = {
@@ -423,6 +445,7 @@ export type FarmerGroupUncheckedCreateWithoutDistrictInput = {
   shortName: string
   fullName: string
   farmers?: Prisma.FarmerUncheckedCreateNestedManyWithoutFarmerGroupInput
+  tbl_training_activity?: Prisma.tbl_training_activityUncheckedCreateNestedManyWithoutTbl_farmer_groupInput
 }
 
 export type FarmerGroupCreateOrConnectWithoutDistrictInput = {
@@ -470,6 +493,7 @@ export type FarmerGroupCreateWithoutFarmersInput = {
   shortName: string
   fullName: string
   district: Prisma.DistrictCreateNestedOneWithoutFarmerGroupsInput
+  tbl_training_activity?: Prisma.tbl_training_activityCreateNestedManyWithoutTbl_farmer_groupInput
 }
 
 export type FarmerGroupUncheckedCreateWithoutFarmersInput = {
@@ -479,6 +503,7 @@ export type FarmerGroupUncheckedCreateWithoutFarmersInput = {
   abrv: string
   shortName: string
   fullName: string
+  tbl_training_activity?: Prisma.tbl_training_activityUncheckedCreateNestedManyWithoutTbl_farmer_groupInput
 }
 
 export type FarmerGroupCreateOrConnectWithoutFarmersInput = {
@@ -504,6 +529,7 @@ export type FarmerGroupUpdateWithoutFarmersInput = {
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   district?: Prisma.DistrictUpdateOneRequiredWithoutFarmerGroupsNestedInput
+  tbl_training_activity?: Prisma.tbl_training_activityUpdateManyWithoutTbl_farmer_groupNestedInput
 }
 
 export type FarmerGroupUncheckedUpdateWithoutFarmersInput = {
@@ -513,6 +539,63 @@ export type FarmerGroupUncheckedUpdateWithoutFarmersInput = {
   abrv?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  tbl_training_activity?: Prisma.tbl_training_activityUncheckedUpdateManyWithoutTbl_farmer_groupNestedInput
+}
+
+export type FarmerGroupCreateWithoutTbl_training_activityInput = {
+  uid?: string
+  fgCode: string
+  abrv: string
+  shortName: string
+  fullName: string
+  farmers?: Prisma.FarmerCreateNestedManyWithoutFarmerGroupInput
+  district: Prisma.DistrictCreateNestedOneWithoutFarmerGroupsInput
+}
+
+export type FarmerGroupUncheckedCreateWithoutTbl_training_activityInput = {
+  uid?: string
+  districtKode: string
+  fgCode: string
+  abrv: string
+  shortName: string
+  fullName: string
+  farmers?: Prisma.FarmerUncheckedCreateNestedManyWithoutFarmerGroupInput
+}
+
+export type FarmerGroupCreateOrConnectWithoutTbl_training_activityInput = {
+  where: Prisma.FarmerGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.FarmerGroupCreateWithoutTbl_training_activityInput, Prisma.FarmerGroupUncheckedCreateWithoutTbl_training_activityInput>
+}
+
+export type FarmerGroupUpsertWithoutTbl_training_activityInput = {
+  update: Prisma.XOR<Prisma.FarmerGroupUpdateWithoutTbl_training_activityInput, Prisma.FarmerGroupUncheckedUpdateWithoutTbl_training_activityInput>
+  create: Prisma.XOR<Prisma.FarmerGroupCreateWithoutTbl_training_activityInput, Prisma.FarmerGroupUncheckedCreateWithoutTbl_training_activityInput>
+  where?: Prisma.FarmerGroupWhereInput
+}
+
+export type FarmerGroupUpdateToOneWithWhereWithoutTbl_training_activityInput = {
+  where?: Prisma.FarmerGroupWhereInput
+  data: Prisma.XOR<Prisma.FarmerGroupUpdateWithoutTbl_training_activityInput, Prisma.FarmerGroupUncheckedUpdateWithoutTbl_training_activityInput>
+}
+
+export type FarmerGroupUpdateWithoutTbl_training_activityInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  fgCode?: Prisma.StringFieldUpdateOperationsInput | string
+  abrv?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  farmers?: Prisma.FarmerUpdateManyWithoutFarmerGroupNestedInput
+  district?: Prisma.DistrictUpdateOneRequiredWithoutFarmerGroupsNestedInput
+}
+
+export type FarmerGroupUncheckedUpdateWithoutTbl_training_activityInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  districtKode?: Prisma.StringFieldUpdateOperationsInput | string
+  fgCode?: Prisma.StringFieldUpdateOperationsInput | string
+  abrv?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  farmers?: Prisma.FarmerUncheckedUpdateManyWithoutFarmerGroupNestedInput
 }
 
 export type FarmerGroupCreateManyDistrictInput = {
@@ -530,6 +613,7 @@ export type FarmerGroupUpdateWithoutDistrictInput = {
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   farmers?: Prisma.FarmerUpdateManyWithoutFarmerGroupNestedInput
+  tbl_training_activity?: Prisma.tbl_training_activityUpdateManyWithoutTbl_farmer_groupNestedInput
 }
 
 export type FarmerGroupUncheckedUpdateWithoutDistrictInput = {
@@ -539,6 +623,7 @@ export type FarmerGroupUncheckedUpdateWithoutDistrictInput = {
   shortName?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   farmers?: Prisma.FarmerUncheckedUpdateManyWithoutFarmerGroupNestedInput
+  tbl_training_activity?: Prisma.tbl_training_activityUncheckedUpdateManyWithoutTbl_farmer_groupNestedInput
 }
 
 export type FarmerGroupUncheckedUpdateManyWithoutDistrictInput = {
@@ -556,10 +641,12 @@ export type FarmerGroupUncheckedUpdateManyWithoutDistrictInput = {
 
 export type FarmerGroupCountOutputType = {
   farmers: number
+  tbl_training_activity: number
 }
 
 export type FarmerGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   farmers?: boolean | FarmerGroupCountOutputTypeCountFarmersArgs
+  tbl_training_activity?: boolean | FarmerGroupCountOutputTypeCountTbl_training_activityArgs
 }
 
 /**
@@ -579,6 +666,13 @@ export type FarmerGroupCountOutputTypeCountFarmersArgs<ExtArgs extends runtime.T
   where?: Prisma.FarmerWhereInput
 }
 
+/**
+ * FarmerGroupCountOutputType without action
+ */
+export type FarmerGroupCountOutputTypeCountTbl_training_activityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.tbl_training_activityWhereInput
+}
+
 
 export type FarmerGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   uid?: boolean
@@ -587,8 +681,9 @@ export type FarmerGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   abrv?: boolean
   shortName?: boolean
   fullName?: boolean
-  district?: boolean | Prisma.DistrictDefaultArgs<ExtArgs>
   farmers?: boolean | Prisma.FarmerGroup$farmersArgs<ExtArgs>
+  district?: boolean | Prisma.DistrictDefaultArgs<ExtArgs>
+  tbl_training_activity?: boolean | Prisma.FarmerGroup$tbl_training_activityArgs<ExtArgs>
   _count?: boolean | Prisma.FarmerGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["farmerGroup"]>
 
@@ -623,8 +718,9 @@ export type FarmerGroupSelectScalar = {
 
 export type FarmerGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "districtKode" | "fgCode" | "abrv" | "shortName" | "fullName", ExtArgs["result"]["farmerGroup"]>
 export type FarmerGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  district?: boolean | Prisma.DistrictDefaultArgs<ExtArgs>
   farmers?: boolean | Prisma.FarmerGroup$farmersArgs<ExtArgs>
+  district?: boolean | Prisma.DistrictDefaultArgs<ExtArgs>
+  tbl_training_activity?: boolean | Prisma.FarmerGroup$tbl_training_activityArgs<ExtArgs>
   _count?: boolean | Prisma.FarmerGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FarmerGroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -637,8 +733,9 @@ export type FarmerGroupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type $FarmerGroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "FarmerGroup"
   objects: {
-    district: Prisma.$DistrictPayload<ExtArgs>
     farmers: Prisma.$FarmerPayload<ExtArgs>[]
+    district: Prisma.$DistrictPayload<ExtArgs>
+    tbl_training_activity: Prisma.$tbl_training_activityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     uid: string
@@ -1041,8 +1138,9 @@ readonly fields: FarmerGroupFieldRefs;
  */
 export interface Prisma__FarmerGroupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  district<T extends Prisma.DistrictDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DistrictDefaultArgs<ExtArgs>>): Prisma.Prisma__DistrictClient<runtime.Types.Result.GetResult<Prisma.$DistrictPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   farmers<T extends Prisma.FarmerGroup$farmersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FarmerGroup$farmersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  district<T extends Prisma.DistrictDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DistrictDefaultArgs<ExtArgs>>): Prisma.Prisma__DistrictClient<runtime.Types.Result.GetResult<Prisma.$DistrictPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tbl_training_activity<T extends Prisma.FarmerGroup$tbl_training_activityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FarmerGroup$tbl_training_activityArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$tbl_training_activityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1495,6 +1593,30 @@ export type FarmerGroup$farmersArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.FarmerScalarFieldEnum | Prisma.FarmerScalarFieldEnum[]
+}
+
+/**
+ * FarmerGroup.tbl_training_activity
+ */
+export type FarmerGroup$tbl_training_activityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the tbl_training_activity
+   */
+  select?: Prisma.tbl_training_activitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the tbl_training_activity
+   */
+  omit?: Prisma.tbl_training_activityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tbl_training_activityInclude<ExtArgs> | null
+  where?: Prisma.tbl_training_activityWhereInput
+  orderBy?: Prisma.tbl_training_activityOrderByWithRelationInput | Prisma.tbl_training_activityOrderByWithRelationInput[]
+  cursor?: Prisma.tbl_training_activityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Tbl_training_activityScalarFieldEnum | Prisma.Tbl_training_activityScalarFieldEnum[]
 }
 
 /**

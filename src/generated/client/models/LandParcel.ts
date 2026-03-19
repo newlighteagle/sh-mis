@@ -60,6 +60,7 @@ export type LandParcelCountAggregateOutputType = {
   fgName: number
   displayLandParcelID: number
   revision: number
+  polygon: number
   sizeHa: number
   _all: number
 }
@@ -99,6 +100,7 @@ export type LandParcelCountAggregateInputType = {
   fgName?: true
   displayLandParcelID?: true
   revision?: true
+  polygon?: true
   sizeHa?: true
   _all?: true
 }
@@ -195,6 +197,7 @@ export type LandParcelGroupByOutputType = {
   fgName: string
   displayLandParcelID: string
   revision: number
+  polygon: runtime.JsonValue
   sizeHa: number
   _count: LandParcelCountAggregateOutputType | null
   _avg: LandParcelAvgAggregateOutputType | null
@@ -227,8 +230,11 @@ export type LandParcelWhereInput = {
   fgName?: Prisma.StringFilter<"LandParcel"> | string
   displayLandParcelID?: Prisma.StringFilter<"LandParcel"> | string
   revision?: Prisma.IntFilter<"LandParcel"> | number
+  polygon?: Prisma.JsonFilter<"LandParcel">
   sizeHa?: Prisma.FloatFilter<"LandParcel"> | number
   farmer?: Prisma.XOR<Prisma.FarmerScalarRelationFilter, Prisma.FarmerWhereInput>
+  tbl_maintenance_data?: Prisma.Tbl_maintenance_dataListRelationFilter
+  tbl_production_data?: Prisma.Tbl_production_dataListRelationFilter
 }
 
 export type LandParcelOrderByWithRelationInput = {
@@ -237,8 +243,11 @@ export type LandParcelOrderByWithRelationInput = {
   fgName?: Prisma.SortOrder
   displayLandParcelID?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  polygon?: Prisma.SortOrder
   sizeHa?: Prisma.SortOrder
   farmer?: Prisma.FarmerOrderByWithRelationInput
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataOrderByRelationAggregateInput
+  tbl_production_data?: Prisma.tbl_production_dataOrderByRelationAggregateInput
 }
 
 export type LandParcelWhereUniqueInput = Prisma.AtLeast<{
@@ -250,8 +259,11 @@ export type LandParcelWhereUniqueInput = Prisma.AtLeast<{
   fgName?: Prisma.StringFilter<"LandParcel"> | string
   displayLandParcelID?: Prisma.StringFilter<"LandParcel"> | string
   revision?: Prisma.IntFilter<"LandParcel"> | number
+  polygon?: Prisma.JsonFilter<"LandParcel">
   sizeHa?: Prisma.FloatFilter<"LandParcel"> | number
   farmer?: Prisma.XOR<Prisma.FarmerScalarRelationFilter, Prisma.FarmerWhereInput>
+  tbl_maintenance_data?: Prisma.Tbl_maintenance_dataListRelationFilter
+  tbl_production_data?: Prisma.Tbl_production_dataListRelationFilter
 }, "uid">
 
 export type LandParcelOrderByWithAggregationInput = {
@@ -260,6 +272,7 @@ export type LandParcelOrderByWithAggregationInput = {
   fgName?: Prisma.SortOrder
   displayLandParcelID?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  polygon?: Prisma.SortOrder
   sizeHa?: Prisma.SortOrder
   _count?: Prisma.LandParcelCountOrderByAggregateInput
   _avg?: Prisma.LandParcelAvgOrderByAggregateInput
@@ -277,7 +290,32 @@ export type LandParcelScalarWhereWithAggregatesInput = {
   fgName?: Prisma.StringWithAggregatesFilter<"LandParcel"> | string
   displayLandParcelID?: Prisma.StringWithAggregatesFilter<"LandParcel"> | string
   revision?: Prisma.IntWithAggregatesFilter<"LandParcel"> | number
+  polygon?: Prisma.JsonWithAggregatesFilter<"LandParcel">
   sizeHa?: Prisma.FloatWithAggregatesFilter<"LandParcel"> | number
+}
+
+export type LandParcelCreateInput = {
+  uid?: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  farmer: Prisma.FarmerCreateNestedOneWithoutLandParcelsInput
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataCreateNestedManyWithoutTbl_land_parcelInput
+  tbl_production_data?: Prisma.tbl_production_dataCreateNestedManyWithoutTbl_land_parcelInput
+}
+
+export type LandParcelUncheckedCreateInput = {
+  uid?: string
+  fid: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUncheckedCreateNestedManyWithoutTbl_land_parcelInput
+  tbl_production_data?: Prisma.tbl_production_dataUncheckedCreateNestedManyWithoutTbl_land_parcelInput
 }
 
 export type LandParcelUpdateInput = {
@@ -285,8 +323,11 @@ export type LandParcelUpdateInput = {
   fgName?: Prisma.StringFieldUpdateOperationsInput | string
   displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
   farmer?: Prisma.FarmerUpdateOneRequiredWithoutLandParcelsNestedInput
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUpdateManyWithoutTbl_land_parcelNestedInput
+  tbl_production_data?: Prisma.tbl_production_dataUpdateManyWithoutTbl_land_parcelNestedInput
 }
 
 export type LandParcelUncheckedUpdateInput = {
@@ -295,7 +336,20 @@ export type LandParcelUncheckedUpdateInput = {
   fgName?: Prisma.StringFieldUpdateOperationsInput | string
   displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUncheckedUpdateManyWithoutTbl_land_parcelNestedInput
+  tbl_production_data?: Prisma.tbl_production_dataUncheckedUpdateManyWithoutTbl_land_parcelNestedInput
+}
+
+export type LandParcelCreateManyInput = {
+  uid?: string
+  fid: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
 }
 
 export type LandParcelUpdateManyMutationInput = {
@@ -303,6 +357,7 @@ export type LandParcelUpdateManyMutationInput = {
   fgName?: Prisma.StringFieldUpdateOperationsInput | string
   displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
@@ -312,6 +367,7 @@ export type LandParcelUncheckedUpdateManyInput = {
   fgName?: Prisma.StringFieldUpdateOperationsInput | string
   displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
@@ -331,6 +387,7 @@ export type LandParcelCountOrderByAggregateInput = {
   fgName?: Prisma.SortOrder
   displayLandParcelID?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  polygon?: Prisma.SortOrder
   sizeHa?: Prisma.SortOrder
 }
 
@@ -362,15 +419,30 @@ export type LandParcelSumOrderByAggregateInput = {
   sizeHa?: Prisma.SortOrder
 }
 
+export type LandParcelScalarRelationFilter = {
+  is?: Prisma.LandParcelWhereInput
+  isNot?: Prisma.LandParcelWhereInput
+}
+
 export type LandParcelCreateNestedManyWithoutFarmerInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutFarmerInput, Prisma.LandParcelUncheckedCreateWithoutFarmerInput> | Prisma.LandParcelCreateWithoutFarmerInput[] | Prisma.LandParcelUncheckedCreateWithoutFarmerInput[]
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutFarmerInput | Prisma.LandParcelCreateOrConnectWithoutFarmerInput[]
+  createMany?: Prisma.LandParcelCreateManyFarmerInputEnvelope
   connect?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
 }
 
 export type LandParcelUncheckedCreateNestedManyWithoutFarmerInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutFarmerInput, Prisma.LandParcelUncheckedCreateWithoutFarmerInput> | Prisma.LandParcelCreateWithoutFarmerInput[] | Prisma.LandParcelUncheckedCreateWithoutFarmerInput[]
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutFarmerInput | Prisma.LandParcelCreateOrConnectWithoutFarmerInput[]
+  createMany?: Prisma.LandParcelCreateManyFarmerInputEnvelope
   connect?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
 }
 
 export type LandParcelUpdateManyWithoutFarmerNestedInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutFarmerInput, Prisma.LandParcelUncheckedCreateWithoutFarmerInput> | Prisma.LandParcelCreateWithoutFarmerInput[] | Prisma.LandParcelUncheckedCreateWithoutFarmerInput[]
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutFarmerInput | Prisma.LandParcelCreateOrConnectWithoutFarmerInput[]
+  upsert?: Prisma.LandParcelUpsertWithWhereUniqueWithoutFarmerInput | Prisma.LandParcelUpsertWithWhereUniqueWithoutFarmerInput[]
+  createMany?: Prisma.LandParcelCreateManyFarmerInputEnvelope
   set?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
   disconnect?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
   delete?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
@@ -381,6 +453,10 @@ export type LandParcelUpdateManyWithoutFarmerNestedInput = {
 }
 
 export type LandParcelUncheckedUpdateManyWithoutFarmerNestedInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutFarmerInput, Prisma.LandParcelUncheckedCreateWithoutFarmerInput> | Prisma.LandParcelCreateWithoutFarmerInput[] | Prisma.LandParcelUncheckedCreateWithoutFarmerInput[]
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutFarmerInput | Prisma.LandParcelCreateOrConnectWithoutFarmerInput[]
+  upsert?: Prisma.LandParcelUpsertWithWhereUniqueWithoutFarmerInput | Prisma.LandParcelUpsertWithWhereUniqueWithoutFarmerInput[]
+  createMany?: Prisma.LandParcelCreateManyFarmerInputEnvelope
   set?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
   disconnect?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
   delete?: Prisma.LandParcelWhereUniqueInput | Prisma.LandParcelWhereUniqueInput[]
@@ -406,6 +482,72 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type LandParcelCreateNestedOneWithoutTbl_maintenance_dataInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_maintenance_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_maintenance_dataInput>
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutTbl_maintenance_dataInput
+  connect?: Prisma.LandParcelWhereUniqueInput
+}
+
+export type LandParcelUpdateOneRequiredWithoutTbl_maintenance_dataNestedInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_maintenance_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_maintenance_dataInput>
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutTbl_maintenance_dataInput
+  upsert?: Prisma.LandParcelUpsertWithoutTbl_maintenance_dataInput
+  connect?: Prisma.LandParcelWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LandParcelUpdateToOneWithWhereWithoutTbl_maintenance_dataInput, Prisma.LandParcelUpdateWithoutTbl_maintenance_dataInput>, Prisma.LandParcelUncheckedUpdateWithoutTbl_maintenance_dataInput>
+}
+
+export type LandParcelCreateNestedOneWithoutTbl_production_dataInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_production_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_production_dataInput>
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutTbl_production_dataInput
+  connect?: Prisma.LandParcelWhereUniqueInput
+}
+
+export type LandParcelUpdateOneRequiredWithoutTbl_production_dataNestedInput = {
+  create?: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_production_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_production_dataInput>
+  connectOrCreate?: Prisma.LandParcelCreateOrConnectWithoutTbl_production_dataInput
+  upsert?: Prisma.LandParcelUpsertWithoutTbl_production_dataInput
+  connect?: Prisma.LandParcelWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LandParcelUpdateToOneWithWhereWithoutTbl_production_dataInput, Prisma.LandParcelUpdateWithoutTbl_production_dataInput>, Prisma.LandParcelUncheckedUpdateWithoutTbl_production_dataInput>
+}
+
+export type LandParcelCreateWithoutFarmerInput = {
+  uid?: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataCreateNestedManyWithoutTbl_land_parcelInput
+  tbl_production_data?: Prisma.tbl_production_dataCreateNestedManyWithoutTbl_land_parcelInput
+}
+
+export type LandParcelUncheckedCreateWithoutFarmerInput = {
+  uid?: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUncheckedCreateNestedManyWithoutTbl_land_parcelInput
+  tbl_production_data?: Prisma.tbl_production_dataUncheckedCreateNestedManyWithoutTbl_land_parcelInput
+}
+
+export type LandParcelCreateOrConnectWithoutFarmerInput = {
+  where: Prisma.LandParcelWhereUniqueInput
+  create: Prisma.XOR<Prisma.LandParcelCreateWithoutFarmerInput, Prisma.LandParcelUncheckedCreateWithoutFarmerInput>
+}
+
+export type LandParcelCreateManyFarmerInputEnvelope = {
+  data: Prisma.LandParcelCreateManyFarmerInput | Prisma.LandParcelCreateManyFarmerInput[]
+  skipDuplicates?: boolean
+}
+
+export type LandParcelUpsertWithWhereUniqueWithoutFarmerInput = {
+  where: Prisma.LandParcelWhereUniqueInput
+  update: Prisma.XOR<Prisma.LandParcelUpdateWithoutFarmerInput, Prisma.LandParcelUncheckedUpdateWithoutFarmerInput>
+  create: Prisma.XOR<Prisma.LandParcelCreateWithoutFarmerInput, Prisma.LandParcelUncheckedCreateWithoutFarmerInput>
+}
+
 export type LandParcelUpdateWithWhereUniqueWithoutFarmerInput = {
   where: Prisma.LandParcelWhereUniqueInput
   data: Prisma.XOR<Prisma.LandParcelUpdateWithoutFarmerInput, Prisma.LandParcelUncheckedUpdateWithoutFarmerInput>
@@ -425,7 +567,137 @@ export type LandParcelScalarWhereInput = {
   fgName?: Prisma.StringFilter<"LandParcel"> | string
   displayLandParcelID?: Prisma.StringFilter<"LandParcel"> | string
   revision?: Prisma.IntFilter<"LandParcel"> | number
+  polygon?: Prisma.JsonFilter<"LandParcel">
   sizeHa?: Prisma.FloatFilter<"LandParcel"> | number
+}
+
+export type LandParcelCreateWithoutTbl_maintenance_dataInput = {
+  uid?: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  farmer: Prisma.FarmerCreateNestedOneWithoutLandParcelsInput
+  tbl_production_data?: Prisma.tbl_production_dataCreateNestedManyWithoutTbl_land_parcelInput
+}
+
+export type LandParcelUncheckedCreateWithoutTbl_maintenance_dataInput = {
+  uid?: string
+  fid: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  tbl_production_data?: Prisma.tbl_production_dataUncheckedCreateNestedManyWithoutTbl_land_parcelInput
+}
+
+export type LandParcelCreateOrConnectWithoutTbl_maintenance_dataInput = {
+  where: Prisma.LandParcelWhereUniqueInput
+  create: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_maintenance_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_maintenance_dataInput>
+}
+
+export type LandParcelUpsertWithoutTbl_maintenance_dataInput = {
+  update: Prisma.XOR<Prisma.LandParcelUpdateWithoutTbl_maintenance_dataInput, Prisma.LandParcelUncheckedUpdateWithoutTbl_maintenance_dataInput>
+  create: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_maintenance_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_maintenance_dataInput>
+  where?: Prisma.LandParcelWhereInput
+}
+
+export type LandParcelUpdateToOneWithWhereWithoutTbl_maintenance_dataInput = {
+  where?: Prisma.LandParcelWhereInput
+  data: Prisma.XOR<Prisma.LandParcelUpdateWithoutTbl_maintenance_dataInput, Prisma.LandParcelUncheckedUpdateWithoutTbl_maintenance_dataInput>
+}
+
+export type LandParcelUpdateWithoutTbl_maintenance_dataInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  fgName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
+  revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
+  farmer?: Prisma.FarmerUpdateOneRequiredWithoutLandParcelsNestedInput
+  tbl_production_data?: Prisma.tbl_production_dataUpdateManyWithoutTbl_land_parcelNestedInput
+}
+
+export type LandParcelUncheckedUpdateWithoutTbl_maintenance_dataInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  fid?: Prisma.StringFieldUpdateOperationsInput | string
+  fgName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
+  revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
+  tbl_production_data?: Prisma.tbl_production_dataUncheckedUpdateManyWithoutTbl_land_parcelNestedInput
+}
+
+export type LandParcelCreateWithoutTbl_production_dataInput = {
+  uid?: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  farmer: Prisma.FarmerCreateNestedOneWithoutLandParcelsInput
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataCreateNestedManyWithoutTbl_land_parcelInput
+}
+
+export type LandParcelUncheckedCreateWithoutTbl_production_dataInput = {
+  uid?: string
+  fid: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUncheckedCreateNestedManyWithoutTbl_land_parcelInput
+}
+
+export type LandParcelCreateOrConnectWithoutTbl_production_dataInput = {
+  where: Prisma.LandParcelWhereUniqueInput
+  create: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_production_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_production_dataInput>
+}
+
+export type LandParcelUpsertWithoutTbl_production_dataInput = {
+  update: Prisma.XOR<Prisma.LandParcelUpdateWithoutTbl_production_dataInput, Prisma.LandParcelUncheckedUpdateWithoutTbl_production_dataInput>
+  create: Prisma.XOR<Prisma.LandParcelCreateWithoutTbl_production_dataInput, Prisma.LandParcelUncheckedCreateWithoutTbl_production_dataInput>
+  where?: Prisma.LandParcelWhereInput
+}
+
+export type LandParcelUpdateToOneWithWhereWithoutTbl_production_dataInput = {
+  where?: Prisma.LandParcelWhereInput
+  data: Prisma.XOR<Prisma.LandParcelUpdateWithoutTbl_production_dataInput, Prisma.LandParcelUncheckedUpdateWithoutTbl_production_dataInput>
+}
+
+export type LandParcelUpdateWithoutTbl_production_dataInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  fgName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
+  revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
+  farmer?: Prisma.FarmerUpdateOneRequiredWithoutLandParcelsNestedInput
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUpdateManyWithoutTbl_land_parcelNestedInput
+}
+
+export type LandParcelUncheckedUpdateWithoutTbl_production_dataInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  fid?: Prisma.StringFieldUpdateOperationsInput | string
+  fgName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
+  revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUncheckedUpdateManyWithoutTbl_land_parcelNestedInput
+}
+
+export type LandParcelCreateManyFarmerInput = {
+  uid?: string
+  fgName: string
+  displayLandParcelID: string
+  revision: number
+  polygon: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sizeHa: number
 }
 
 export type LandParcelUpdateWithoutFarmerInput = {
@@ -433,7 +705,10 @@ export type LandParcelUpdateWithoutFarmerInput = {
   fgName?: Prisma.StringFieldUpdateOperationsInput | string
   displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUpdateManyWithoutTbl_land_parcelNestedInput
+  tbl_production_data?: Prisma.tbl_production_dataUpdateManyWithoutTbl_land_parcelNestedInput
 }
 
 export type LandParcelUncheckedUpdateWithoutFarmerInput = {
@@ -441,7 +716,10 @@ export type LandParcelUncheckedUpdateWithoutFarmerInput = {
   fgName?: Prisma.StringFieldUpdateOperationsInput | string
   displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
+  tbl_maintenance_data?: Prisma.tbl_maintenance_dataUncheckedUpdateManyWithoutTbl_land_parcelNestedInput
+  tbl_production_data?: Prisma.tbl_production_dataUncheckedUpdateManyWithoutTbl_land_parcelNestedInput
 }
 
 export type LandParcelUncheckedUpdateManyWithoutFarmerInput = {
@@ -449,9 +727,48 @@ export type LandParcelUncheckedUpdateManyWithoutFarmerInput = {
   fgName?: Prisma.StringFieldUpdateOperationsInput | string
   displayLandParcelID?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.IntFieldUpdateOperationsInput | number
+  polygon?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   sizeHa?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
+
+/**
+ * Count Type LandParcelCountOutputType
+ */
+
+export type LandParcelCountOutputType = {
+  tbl_maintenance_data: number
+  tbl_production_data: number
+}
+
+export type LandParcelCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tbl_maintenance_data?: boolean | LandParcelCountOutputTypeCountTbl_maintenance_dataArgs
+  tbl_production_data?: boolean | LandParcelCountOutputTypeCountTbl_production_dataArgs
+}
+
+/**
+ * LandParcelCountOutputType without action
+ */
+export type LandParcelCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LandParcelCountOutputType
+   */
+  select?: Prisma.LandParcelCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * LandParcelCountOutputType without action
+ */
+export type LandParcelCountOutputTypeCountTbl_maintenance_dataArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.tbl_maintenance_dataWhereInput
+}
+
+/**
+ * LandParcelCountOutputType without action
+ */
+export type LandParcelCountOutputTypeCountTbl_production_dataArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.tbl_production_dataWhereInput
+}
 
 
 export type LandParcelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -460,10 +777,24 @@ export type LandParcelSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   fgName?: boolean
   displayLandParcelID?: boolean
   revision?: boolean
+  polygon?: boolean
+  sizeHa?: boolean
+  farmer?: boolean | Prisma.FarmerDefaultArgs<ExtArgs>
+  tbl_maintenance_data?: boolean | Prisma.LandParcel$tbl_maintenance_dataArgs<ExtArgs>
+  tbl_production_data?: boolean | Prisma.LandParcel$tbl_production_dataArgs<ExtArgs>
+  _count?: boolean | Prisma.LandParcelCountOutputTypeDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["landParcel"]>
+
+export type LandParcelSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  uid?: boolean
+  fid?: boolean
+  fgName?: boolean
+  displayLandParcelID?: boolean
+  revision?: boolean
+  polygon?: boolean
   sizeHa?: boolean
   farmer?: boolean | Prisma.FarmerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["landParcel"]>
-
 
 export type LandParcelSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   uid?: boolean
@@ -471,6 +802,7 @@ export type LandParcelSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   fgName?: boolean
   displayLandParcelID?: boolean
   revision?: boolean
+  polygon?: boolean
   sizeHa?: boolean
   farmer?: boolean | Prisma.FarmerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["landParcel"]>
@@ -481,11 +813,18 @@ export type LandParcelSelectScalar = {
   fgName?: boolean
   displayLandParcelID?: boolean
   revision?: boolean
+  polygon?: boolean
   sizeHa?: boolean
 }
 
-export type LandParcelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "fid" | "fgName" | "displayLandParcelID" | "revision" | "sizeHa", ExtArgs["result"]["landParcel"]>
+export type LandParcelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "fid" | "fgName" | "displayLandParcelID" | "revision" | "polygon" | "sizeHa", ExtArgs["result"]["landParcel"]>
 export type LandParcelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  farmer?: boolean | Prisma.FarmerDefaultArgs<ExtArgs>
+  tbl_maintenance_data?: boolean | Prisma.LandParcel$tbl_maintenance_dataArgs<ExtArgs>
+  tbl_production_data?: boolean | Prisma.LandParcel$tbl_production_dataArgs<ExtArgs>
+  _count?: boolean | Prisma.LandParcelCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type LandParcelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   farmer?: boolean | Prisma.FarmerDefaultArgs<ExtArgs>
 }
 export type LandParcelIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -496,6 +835,8 @@ export type $LandParcelPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "LandParcel"
   objects: {
     farmer: Prisma.$FarmerPayload<ExtArgs>
+    tbl_maintenance_data: Prisma.$tbl_maintenance_dataPayload<ExtArgs>[]
+    tbl_production_data: Prisma.$tbl_production_dataPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     uid: string
@@ -503,6 +844,7 @@ export type $LandParcelPayload<ExtArgs extends runtime.Types.Extensions.Internal
     fgName: string
     displayLandParcelID: string
     revision: number
+    polygon: runtime.JsonValue
     sizeHa: number
   }, ExtArgs["result"]["landParcel"]>
   composites: {}
@@ -592,6 +934,58 @@ export interface LandParcelDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
    */
   findMany<T extends LandParcelFindManyArgs>(args?: Prisma.SelectSubset<T, LandParcelFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LandParcelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+  /**
+   * Create a LandParcel.
+   * @param {LandParcelCreateArgs} args - Arguments to create a LandParcel.
+   * @example
+   * // Create one LandParcel
+   * const LandParcel = await prisma.landParcel.create({
+   *   data: {
+   *     // ... data to create a LandParcel
+   *   }
+   * })
+   * 
+   */
+  create<T extends LandParcelCreateArgs>(args: Prisma.SelectSubset<T, LandParcelCreateArgs<ExtArgs>>): Prisma.Prisma__LandParcelClient<runtime.Types.Result.GetResult<Prisma.$LandParcelPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+  /**
+   * Create many LandParcels.
+   * @param {LandParcelCreateManyArgs} args - Arguments to create many LandParcels.
+   * @example
+   * // Create many LandParcels
+   * const landParcel = await prisma.landParcel.createMany({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   *     
+   */
+  createMany<T extends LandParcelCreateManyArgs>(args?: Prisma.SelectSubset<T, LandParcelCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Create many LandParcels and returns the data saved in the database.
+   * @param {LandParcelCreateManyAndReturnArgs} args - Arguments to create many LandParcels.
+   * @example
+   * // Create many LandParcels
+   * const landParcel = await prisma.landParcel.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many LandParcels and only return the `uid`
+   * const landParcelWithUidOnly = await prisma.landParcel.createManyAndReturn({
+   *   select: { uid: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends LandParcelCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, LandParcelCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LandParcelPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Delete a LandParcel.
@@ -686,6 +1080,25 @@ export interface LandParcelDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
    */
   updateManyAndReturn<T extends LandParcelUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, LandParcelUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LandParcelPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+  /**
+   * Create or update one LandParcel.
+   * @param {LandParcelUpsertArgs} args - Arguments to update or create a LandParcel.
+   * @example
+   * // Update or create a LandParcel
+   * const landParcel = await prisma.landParcel.upsert({
+   *   create: {
+   *     // ... data to create a LandParcel
+   *   },
+   *   update: {
+   *     // ... in case it already exists, update
+   *   },
+   *   where: {
+   *     // ... the filter for the LandParcel we want to update
+   *   }
+   * })
+   */
+  upsert<T extends LandParcelUpsertArgs>(args: Prisma.SelectSubset<T, LandParcelUpsertArgs<ExtArgs>>): Prisma.Prisma__LandParcelClient<runtime.Types.Result.GetResult<Prisma.$LandParcelPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
   /**
@@ -828,6 +1241,8 @@ readonly fields: LandParcelFieldRefs;
 export interface Prisma__LandParcelClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   farmer<T extends Prisma.FarmerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FarmerDefaultArgs<ExtArgs>>): Prisma.Prisma__FarmerClient<runtime.Types.Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tbl_maintenance_data<T extends Prisma.LandParcel$tbl_maintenance_dataArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LandParcel$tbl_maintenance_dataArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$tbl_maintenance_dataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tbl_production_data<T extends Prisma.LandParcel$tbl_production_dataArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LandParcel$tbl_production_dataArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$tbl_production_dataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -862,6 +1277,7 @@ export interface LandParcelFieldRefs {
   readonly fgName: Prisma.FieldRef<"LandParcel", 'String'>
   readonly displayLandParcelID: Prisma.FieldRef<"LandParcel", 'String'>
   readonly revision: Prisma.FieldRef<"LandParcel", 'Int'>
+  readonly polygon: Prisma.FieldRef<"LandParcel", 'Json'>
   readonly sizeHa: Prisma.FieldRef<"LandParcel", 'Float'>
 }
     
@@ -1063,6 +1479,62 @@ export type LandParcelFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * LandParcel create
+ */
+export type LandParcelCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LandParcel
+   */
+  select?: Prisma.LandParcelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LandParcel
+   */
+  omit?: Prisma.LandParcelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LandParcelInclude<ExtArgs> | null
+  /**
+   * The data needed to create a LandParcel.
+   */
+  data: Prisma.XOR<Prisma.LandParcelCreateInput, Prisma.LandParcelUncheckedCreateInput>
+}
+
+/**
+ * LandParcel createMany
+ */
+export type LandParcelCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to create many LandParcels.
+   */
+  data: Prisma.LandParcelCreateManyInput | Prisma.LandParcelCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
+ * LandParcel createManyAndReturn
+ */
+export type LandParcelCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LandParcel
+   */
+  select?: Prisma.LandParcelSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the LandParcel
+   */
+  omit?: Prisma.LandParcelOmit<ExtArgs> | null
+  /**
+   * The data used to create many LandParcels.
+   */
+  data: Prisma.LandParcelCreateManyInput | Prisma.LandParcelCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LandParcelIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * LandParcel update
  */
 export type LandParcelUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1137,6 +1609,36 @@ export type LandParcelUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
 }
 
 /**
+ * LandParcel upsert
+ */
+export type LandParcelUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LandParcel
+   */
+  select?: Prisma.LandParcelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LandParcel
+   */
+  omit?: Prisma.LandParcelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LandParcelInclude<ExtArgs> | null
+  /**
+   * The filter to search for the LandParcel to update in case it exists.
+   */
+  where: Prisma.LandParcelWhereUniqueInput
+  /**
+   * In case the LandParcel found by the `where` argument doesn't exist, create a new LandParcel with this data.
+   */
+  create: Prisma.XOR<Prisma.LandParcelCreateInput, Prisma.LandParcelUncheckedCreateInput>
+  /**
+   * In case the LandParcel was found with the provided `where` argument, update it with this data.
+   */
+  update: Prisma.XOR<Prisma.LandParcelUpdateInput, Prisma.LandParcelUncheckedUpdateInput>
+}
+
+/**
  * LandParcel delete
  */
 export type LandParcelDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1170,6 +1672,54 @@ export type LandParcelDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many LandParcels to delete.
    */
   limit?: number
+}
+
+/**
+ * LandParcel.tbl_maintenance_data
+ */
+export type LandParcel$tbl_maintenance_dataArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the tbl_maintenance_data
+   */
+  select?: Prisma.tbl_maintenance_dataSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the tbl_maintenance_data
+   */
+  omit?: Prisma.tbl_maintenance_dataOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tbl_maintenance_dataInclude<ExtArgs> | null
+  where?: Prisma.tbl_maintenance_dataWhereInput
+  orderBy?: Prisma.tbl_maintenance_dataOrderByWithRelationInput | Prisma.tbl_maintenance_dataOrderByWithRelationInput[]
+  cursor?: Prisma.tbl_maintenance_dataWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Tbl_maintenance_dataScalarFieldEnum | Prisma.Tbl_maintenance_dataScalarFieldEnum[]
+}
+
+/**
+ * LandParcel.tbl_production_data
+ */
+export type LandParcel$tbl_production_dataArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the tbl_production_data
+   */
+  select?: Prisma.tbl_production_dataSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the tbl_production_data
+   */
+  omit?: Prisma.tbl_production_dataOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tbl_production_dataInclude<ExtArgs> | null
+  where?: Prisma.tbl_production_dataWhereInput
+  orderBy?: Prisma.tbl_production_dataOrderByWithRelationInput | Prisma.tbl_production_dataOrderByWithRelationInput[]
+  cursor?: Prisma.tbl_production_dataWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Tbl_production_dataScalarFieldEnum | Prisma.Tbl_production_dataScalarFieldEnum[]
 }
 
 /**

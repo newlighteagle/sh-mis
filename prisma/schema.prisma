@@ -1,16 +1,16 @@
-datasource db {
-  provider = "postgresql"
-}
-
 generator client {
   provider   = "prisma-client"
   output     = "../src/generated/client"
   engineType = "library"
 }
 
+datasource db {
+  provider = "postgresql"
+}
+
 model Role {
-  id          String  @id @default(uuid())
-  name        String  @unique // Admin, Management, Operator, User
+  uid         String  @id
+  name        String  @unique
   description String?
   users       User[]
 
@@ -18,16 +18,16 @@ model Role {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  uid       String   @id
   email     String   @unique
   name      String?
-  password  String? // Nullable for now
+  password  String?
   roleId    String
-  role      Role     @relation(fields: [roleId], references: [id])
   groupId   String?
-  group     Group?   @relation(fields: [groupId], references: [uid])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  group     Group?   @relation(fields: [groupId], references: [uid])
+  role      Role     @relation(fields: [roleId], references: [uid])
 
   @@map("tbl-user")
 }
@@ -36,17 +36,16 @@ model Group {
   uid       String  @id @default(uuid())
   abrv      String  @unique
   name      String
-  is_active Boolean @default(true) // defaults to true as is common for is_active
+  is_active Boolean @default(true)
   users     User[]
 
   @@map("tbl-group")
 }
 
 model Province {
-  uid  String @id @default(uuid())
-  kode String @unique
-  name String
-
+  uid       String     @id @default(uuid())
+  kode      String     @unique
+  name      String
   districts District[]
 
   @@map("tbl-province")
@@ -64,40 +63,103 @@ model District {
 }
 
 model FarmerGroup {
-  uid          String   @id @default(uuid())
-  districtKode String
-  district     District @relation(fields: [districtKode], references: [kode])
-  fgCode       String   @unique @map("fg_code")
-  abrv         String
-  shortName    String   @map("short_name")
-  fullName     String   @map("full_name")
-  farmers      Farmer[]
+  uid                   String                  @id @default(uuid())
+  districtKode          String
+  fgCode                String                  @unique @map("fg_code")
+  abrv                  String
+  shortName             String                  @map("short_name")
+  fullName              String                  @map("full_name")
+  farmers               Farmer[]
+  district              District                @relation(fields: [districtKode], references: [kode])
+  tbl_training_activity tbl_training_activity[]
 
   @@map("tbl-farmer-group")
 }
 
 model Farmer {
-  uid             String       @id @default(uuid())
-  fgId            String       @map("fg_id")
-  farmerGroup     FarmerGroup  @relation(fields: [fgId], references: [uid])
-  name            String
-  displayFarmerID String       @map("display_farmer_id")
-  status          String // Registered, Reserved, InActive
-  certificate     String?      // Multiple certificates separated by comma
-  landParcels     LandParcel[]
+  uid               String              @id @default(uuid())
+  fgId              String              @map("fg_id")
+  name              String
+  displayFarmerID   String              @map("display_farmer_id")
+  status            String
+  certificate       String?
+  farmerGroup       FarmerGroup         @relation(fields: [fgId], references: [uid])
+  landParcels       LandParcel[]
+  tbl_training_data tbl_training_data[]
 
   @@map("tbl-farmer")
 }
 
 model LandParcel {
-  uid                 String                 @id @default(uuid())
-  fid                 String
-  farmer              Farmer                 @relation(fields: [fid], references: [uid])
-  fgName              String                 @map("fg_name")
-  displayLandParcelID String                 @map("display_land_parcel_id")
-  revision            Int
-  polygon             Unsupported("polygon")
-  sizeHa              Float                  @map("size_ha")
+  uid                  String                 @id @default(uuid())
+  fid                  String
+  fgName               String                 @map("fg_name")
+  displayLandParcelID  String                 @map("display_land_parcel_id")
+  revision             Int
+  polygon              Json
+  sizeHa               Float                  @map("size_ha")
+  farmer               Farmer                 @relation(fields: [fid], references: [uid])
+  tbl_maintenance_data tbl_maintenance_data[]
+  tbl_production_data  tbl_production_data[]
 
   @@map("tbl-land-parcel")
+}
+
+model tbl_maintenance_data {
+  uid             String     @id
+  land_parcel_id  String
+  date            DateTime
+  activity_type   String
+  cost            Float?
+  note            String?
+  tbl_land_parcel LandParcel @relation(fields: [land_parcel_id], references: [uid])
+
+  @@map("tbl-maintenance-data")
+}
+
+model tbl_production_data {
+  uid             String     @id
+  land_parcel_id  String
+  date            DateTime
+  amount_kg       Float
+  price           Float?
+  note            String?
+  tbl_land_parcel LandParcel @relation(fields: [land_parcel_id], references: [uid])
+
+  @@map("tbl-production-data")
+}
+
+model tbl_training_activity {
+  uid                  String               @id
+  fg_id                String
+  trainingPackageId    String
+  training_date        DateTime
+  total_participant    Int
+  location             String
+  absensi              String
+  notulen              String
+  photo                String
+  tbl_farmer_group     FarmerGroup          @relation(fields: [fg_id], references: [uid])
+  tbl_training_package tbl_training_package @relation(fields: [trainingPackageId], references: [uid])
+  tbl_training_data    tbl_training_data[]
+
+  @@map("tbl-training-activity")
+}
+
+model tbl_training_data {
+  uid                   String                @id
+  trainingActivityId    String
+  fid                   String
+  tbl_farmer            Farmer                @relation(fields: [fid], references: [uid])
+  tbl_training_activity tbl_training_activity @relation(fields: [trainingActivityId], references: [uid])
+
+  @@map("tbl-training-data")
+}
+
+model tbl_training_package {
+  uid                   String                  @id
+  name                  String
+  tbl_training_activity tbl_training_activity[]
+
+  @@map("tbl-training-package")
 }

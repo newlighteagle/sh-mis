@@ -58,7 +58,12 @@ export const ModelName = {
   District: 'District',
   FarmerGroup: 'FarmerGroup',
   Farmer: 'Farmer',
-  LandParcel: 'LandParcel'
+  LandParcel: 'LandParcel',
+  tbl_maintenance_data: 'tbl_maintenance_data',
+  tbl_production_data: 'tbl_production_data',
+  tbl_training_activity: 'tbl_training_activity',
+  tbl_training_data: 'tbl_training_data',
+  tbl_training_package: 'tbl_training_package'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,7 +83,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 
 export const RoleScalarFieldEnum = {
-  id: 'id',
+  uid: 'uid',
   name: 'name',
   description: 'description'
 } as const
@@ -87,7 +92,7 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 
 
 export const UserScalarFieldEnum = {
-  id: 'id',
+  uid: 'uid',
   email: 'email',
   name: 'name',
   password: 'password',
@@ -159,10 +164,67 @@ export const LandParcelScalarFieldEnum = {
   fgName: 'fgName',
   displayLandParcelID: 'displayLandParcelID',
   revision: 'revision',
+  polygon: 'polygon',
   sizeHa: 'sizeHa'
 } as const
 
 export type LandParcelScalarFieldEnum = (typeof LandParcelScalarFieldEnum)[keyof typeof LandParcelScalarFieldEnum]
+
+
+export const Tbl_maintenance_dataScalarFieldEnum = {
+  uid: 'uid',
+  land_parcel_id: 'land_parcel_id',
+  date: 'date',
+  activity_type: 'activity_type',
+  cost: 'cost',
+  note: 'note'
+} as const
+
+export type Tbl_maintenance_dataScalarFieldEnum = (typeof Tbl_maintenance_dataScalarFieldEnum)[keyof typeof Tbl_maintenance_dataScalarFieldEnum]
+
+
+export const Tbl_production_dataScalarFieldEnum = {
+  uid: 'uid',
+  land_parcel_id: 'land_parcel_id',
+  date: 'date',
+  amount_kg: 'amount_kg',
+  price: 'price',
+  note: 'note'
+} as const
+
+export type Tbl_production_dataScalarFieldEnum = (typeof Tbl_production_dataScalarFieldEnum)[keyof typeof Tbl_production_dataScalarFieldEnum]
+
+
+export const Tbl_training_activityScalarFieldEnum = {
+  uid: 'uid',
+  fg_id: 'fg_id',
+  trainingPackageId: 'trainingPackageId',
+  training_date: 'training_date',
+  total_participant: 'total_participant',
+  location: 'location',
+  absensi: 'absensi',
+  notulen: 'notulen',
+  photo: 'photo'
+} as const
+
+export type Tbl_training_activityScalarFieldEnum = (typeof Tbl_training_activityScalarFieldEnum)[keyof typeof Tbl_training_activityScalarFieldEnum]
+
+
+export const Tbl_training_dataScalarFieldEnum = {
+  uid: 'uid',
+  trainingActivityId: 'trainingActivityId',
+  fid: 'fid'
+} as const
+
+export type Tbl_training_dataScalarFieldEnum = (typeof Tbl_training_dataScalarFieldEnum)[keyof typeof Tbl_training_dataScalarFieldEnum]
+
+
+export const Tbl_training_packageScalarFieldEnum = {
+  uid: 'uid',
+  name: 'name'
+} as const
+
+export type Tbl_training_packageScalarFieldEnum = (typeof Tbl_training_packageScalarFieldEnum)[keyof typeof Tbl_training_packageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -171,6 +233,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -187,4 +256,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

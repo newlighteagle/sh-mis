@@ -1,5 +1,6 @@
 
 import { PrismaClient } from '../../src/generated/client/client'
+import { v4 as uuidv4 } from 'uuid'
 
 export const ROLES = {
   ADMIN: 'admin',
@@ -22,7 +23,7 @@ export async function seedRoles(prisma: PrismaClient) {
     await prisma.role.upsert({
       where: { name: role.name },
       update: {},
-      create: role,
+      create: { ...role, uid: uuidv4() },
     })
   }
 }

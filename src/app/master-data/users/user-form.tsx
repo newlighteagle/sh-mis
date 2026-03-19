@@ -44,7 +44,7 @@ const formSchema = z.object({
 
 interface UserFormProps {
   initialData?: { 
-      id: string; 
+      uid: string; 
       name: string | null; 
       email: string;
       roleId: string;
@@ -52,7 +52,7 @@ interface UserFormProps {
     } | null
   open?: boolean
   onOpenChange?: (open: boolean) => void
-  roles: { id: string; name: string }[]
+  roles: { uid: string; name: string }[]
   groups: { uid: string; abrv: string; name: string }[]
 }
 
@@ -102,7 +102,7 @@ export function UserForm({ initialData, open, onOpenChange, roles, groups }: Use
     }
 
     if (initialData) {
-      await updateUser(initialData.id, submitData)
+      await updateUser(initialData.uid, submitData)
     } else {
       // For create, password might be mandatory based on requirements, but schema allows optional
       // In a real app we'd validate password presence on create.
@@ -186,7 +186,7 @@ export function UserForm({ initialData, open, onOpenChange, roles, groups }: Use
                         </FormControl>
                         <SelectContent>
                         {roles.map((role) => (
-                            <SelectItem key={role.id} value={role.id}>
+                            <SelectItem key={role.uid} value={role.uid}>
                             {role.name}
                             </SelectItem>
                         ))}

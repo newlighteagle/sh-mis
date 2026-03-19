@@ -57,3 +57,28 @@ export type Farmer = Prisma.FarmerModel
  * 
  */
 export type LandParcel = Prisma.LandParcelModel
+/**
+ * Model tbl_maintenance_data
+ * 
+ */
+export type tbl_maintenance_data = Prisma.tbl_maintenance_dataModel
+/**
+ * Model tbl_production_data
+ * 
+ */
+export type tbl_production_data = Prisma.tbl_production_dataModel
+/**
+ * Model tbl_training_activity
+ * 
+ */
+export type tbl_training_activity = Prisma.tbl_training_activityModel
+/**
+ * Model tbl_training_data
+ * 
+ */
+export type tbl_training_data = Prisma.tbl_training_dataModel
+/**
+ * Model tbl_training_package
+ * 
+ */
+export type tbl_training_package = Prisma.tbl_training_packageModel

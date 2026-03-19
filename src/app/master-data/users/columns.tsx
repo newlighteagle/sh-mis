@@ -28,7 +28,7 @@ import { deleteUser } from "@/actions/user"
 import { Badge } from "@/components/ui/badge"
 
 type Role = {
-  id: string
+  uid: string
   name: string
 }
 
@@ -39,7 +39,7 @@ type Group = {
 }
 
 export type User = {
-  id: string
+  uid: string
   email: string
   name: string | null
   roleId: string
@@ -130,7 +130,7 @@ export const columns = (roles: Role[], groups: Group[]): ColumnDef<User>[] => [
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={() => deleteUser(user.id)} className="bg-red-600 hover:bg-red-700">
+                  <AlertDialogAction onClick={() => deleteUser(user.uid)} className="bg-red-600 hover:bg-red-700">
                     Delete
                   </AlertDialogAction>
                 </AlertDialogFooter>
